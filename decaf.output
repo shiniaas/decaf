@@ -1,0 +1,3213 @@
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: ClassDef ClassDefList
+
+    2 ClassDefList: ClassDef ClassDefList
+    3             | /* empty */
+
+    4 VariableDef: Variable PSEP
+
+    5 Variable: Type IDENTIFIER
+
+    6 Type: KINT
+    7     | KBOOL
+    8     | KSTRING
+    9     | KVOID
+   10     | KCLASS IDENTIFIER
+   11     | Type PLBB PRBB
+
+   12 Formals: Variable VariableList
+   13        | /* empty */
+
+   14 VariableList: PCOMMA Variable VariableList
+   15             | /* empty */
+
+   16 FunctionDef: KSTATIC Type IDENTIFIER OLB Formals ORB StmtBlock
+   17            | Type IDENTIFIER OLB Formals ORB StmtBlock
+
+   18 ClassDef: KCLASS IDENTIFIER KEXTENDS IDENTIFIER PLBBB FieldList PRBBB
+   19         | KCLASS IDENTIFIER PLBBB FieldList PRBBB
+
+   20 FieldList: Field FieldList
+   21          | /* empty */
+
+   22 Field: VariableDef
+   23      | FunctionDef
+
+   24 StmtBlock: PLBBB StmtList PRBBB
+
+   25 StmtList: Stmt StmtList
+   26         | /* empty */
+
+   27 Stmt: VariableDef
+   28     | SimpleStmt PSEP
+   29     | IfStmt
+   30     | WhileStmt
+   31     | ForStmt
+   32     | BreakStmt PSEP
+   33     | ReturnStmt PSEP
+   34     | PrintStmt PSEP
+   35     | StmtBlock
+
+   36 SimpleStmt: LValue OASSIGN Expr
+   37           | Call
+   38           | /* empty */
+
+   39 LValue: Expr PPOINT IDENTIFIER
+   40       | IDENTIFIER
+   41       | Expr PLBB Expr PRBB
+
+   42 Call: Expr PPOINT IDENTIFIER OLB Actuals ORB
+   43     | IDENTIFIER OLB Actuals ORB
+
+   44 Actuals: Expr ExprList
+   45        | /* empty */
+
+   46 ExprList: PCOMMA Expr ExprList
+   47         | /* empty */
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP BoolExpr PSEP SimpleStmt ORB Stmt
+
+   49 WhileStmt: KWHILE OLB BoolExpr ORB Stmt
+
+   50 IfStmt: KIF OLB BoolExpr ORB Stmt KELSE Stmt
+   51       | KIF OLB BoolExpr ORB Stmt
+
+   52 ReturnStmt: KRETURN
+   53           | KRETURN Expr
+
+   54 BreakStmt: KBREAK
+
+   55 PrintStmt: KPRINT OLB Expr ExprList ORB
+
+   56 BoolExpr: Expr
+
+   57 Expr: Constant
+   58     | LValue
+   59     | KTHIS
+   60     | Call
+   61     | OLB Expr ORB
+   62     | Expr OADD Expr
+   63     | Expr OSUB Expr
+   64     | Expr OMUL Expr
+   65     | Expr ODIV Expr
+   66     | Expr OIDIV Expr
+   67     | OSUB Expr
+   68     | Expr OLT Expr
+   69     | Expr OLE Expr
+   70     | Expr OGT Expr
+   71     | Expr OGE Expr
+   72     | Expr OEQU Expr
+   73     | Expr ONE Expr
+   74     | Expr OAND Expr
+   75     | Expr OOR Expr
+   76     | ONOT Expr
+   77     | KREADINTEGER OLB ORB
+   78     | KREADLINE OLB ORB
+   79     | KNEW IDENTIFIER OLB ORB
+   80     | KNEW Type PLBB Expr PRBB
+   81     | KINSTANCEOF OLB Expr PCOMMA IDENTIFIER ORB
+   82     | OLB KCLASS IDENTIFIER ORB Expr
+
+   83 Constant: INTCONST
+   84         | BOOLCONST
+   85         | STRINGCONST
+   86         | KNULL
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+IDENTIFIER (258) 5 10 16 17 18 19 39 40 42 43 79 81 82
+KINT (259) 6
+KBOOL (260) 7
+KSTRING (261) 8
+KVOID (262) 9
+KCLASS (263) 10 18 19 82
+PLBB (264) 11 41 80
+PRBB (265) 11 41 80
+PCOMMA (266) 14 46 81
+KSTATIC (267) 16
+OLB (268) 16 17 42 43 48 49 50 51 55 61 77 78 79 81 82
+ORB (269) 16 17 42 43 48 49 50 51 55 61 77 78 79 81 82
+KEXTENDS (270) 18
+PLBBB (271) 18 19 24
+PRBBB (272) 18 19 24
+PSEP (273) 4 28 32 33 34 48
+KFOR (274) 48
+KWHILE (275) 49
+KIF (276) 50 51
+KELSE (277) 50
+KRETURN (278) 52 53
+KBREAK (279) 54
+KPRINT (280) 55
+KTHIS (281) 59
+OADD (282) 62
+OSUB (283) 63 67
+OMUL (284) 64
+ODIV (285) 65
+OIDIV (286) 66
+OLT (287) 68
+OLE (288) 69
+OGT (289) 70
+OGE (290) 71
+OEQU (291) 72
+ONE (292) 73
+OAND (293) 74
+OOR (294) 75
+ONOT (295) 76
+KREADINTEGER (296) 77
+KREADLINE (297) 78
+KNEW (298) 79 80
+KINSTANCEOF (299) 81
+INTCONST (300) 83
+BOOLCONST (301) 84
+STRINGCONST (302) 85
+KNULL (303) 86
+OASSIGN (304) 36
+PPOINT (305) 39 42
+LOWER_THAN_KELSE (306)
+
+
+Nonterminals, with rules where they appear
+
+$accept (52)
+    on left: 0
+Program (53)
+    on left: 1, on right: 0
+ClassDefList (54)
+    on left: 2 3, on right: 1 2
+VariableDef (55)
+    on left: 4, on right: 22 27
+Variable (56)
+    on left: 5, on right: 4 12 14
+Type (57)
+    on left: 6 7 8 9 10 11, on right: 5 11 16 17 80
+Formals (58)
+    on left: 12 13, on right: 16 17
+VariableList (59)
+    on left: 14 15, on right: 12 14
+FunctionDef (60)
+    on left: 16 17, on right: 23
+ClassDef (61)
+    on left: 18 19, on right: 1 2
+FieldList (62)
+    on left: 20 21, on right: 18 19 20
+Field (63)
+    on left: 22 23, on right: 20
+StmtBlock (64)
+    on left: 24, on right: 16 17 35
+StmtList (65)
+    on left: 25 26, on right: 24 25
+Stmt (66)
+    on left: 27 28 29 30 31 32 33 34 35, on right: 25 48 49 50 51
+SimpleStmt (67)
+    on left: 36 37 38, on right: 28 48
+LValue (68)
+    on left: 39 40 41, on right: 36 58
+Call (69)
+    on left: 42 43, on right: 37 60
+Actuals (70)
+    on left: 44 45, on right: 42 43
+ExprList (71)
+    on left: 46 47, on right: 44 46 55
+ForStmt (72)
+    on left: 48, on right: 31
+WhileStmt (73)
+    on left: 49, on right: 30
+IfStmt (74)
+    on left: 50 51, on right: 29
+ReturnStmt (75)
+    on left: 52 53, on right: 33
+BreakStmt (76)
+    on left: 54, on right: 32
+PrintStmt (77)
+    on left: 55, on right: 34
+BoolExpr (78)
+    on left: 56, on right: 48 49 50 51
+Expr (79)
+    on left: 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74
+    75 76 77 78 79 80 81 82, on right: 36 39 41 42 44 46 53 55 56 61
+    62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 80 81 82
+Constant (80)
+    on left: 83 84 85 86, on right: 57
+
+
+state 0
+
+    0 $accept: . Program $end
+
+    KCLASS  shift, and go to state 1
+
+    Program   go to state 2
+    ClassDef  go to state 3
+
+
+state 1
+
+   18 ClassDef: KCLASS . IDENTIFIER KEXTENDS IDENTIFIER PLBBB FieldList PRBBB
+   19         | KCLASS . IDENTIFIER PLBBB FieldList PRBBB
+
+    IDENTIFIER  shift, and go to state 4
+
+
+state 2
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 5
+
+
+state 3
+
+    1 Program: ClassDef . ClassDefList
+
+    KCLASS  shift, and go to state 1
+
+    $default  reduce using rule 3 (ClassDefList)
+
+    ClassDefList  go to state 6
+    ClassDef      go to state 7
+
+
+state 4
+
+   18 ClassDef: KCLASS IDENTIFIER . KEXTENDS IDENTIFIER PLBBB FieldList PRBBB
+   19         | KCLASS IDENTIFIER . PLBBB FieldList PRBBB
+
+    KEXTENDS  shift, and go to state 8
+    PLBBB     shift, and go to state 9
+
+
+state 5
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+state 6
+
+    1 Program: ClassDef ClassDefList .
+
+    $default  reduce using rule 1 (Program)
+
+
+state 7
+
+    2 ClassDefList: ClassDef . ClassDefList
+
+    KCLASS  shift, and go to state 1
+
+    $default  reduce using rule 3 (ClassDefList)
+
+    ClassDefList  go to state 10
+    ClassDef      go to state 7
+
+
+state 8
+
+   18 ClassDef: KCLASS IDENTIFIER KEXTENDS . IDENTIFIER PLBBB FieldList PRBBB
+
+    IDENTIFIER  shift, and go to state 11
+
+
+state 9
+
+   19 ClassDef: KCLASS IDENTIFIER PLBBB . FieldList PRBBB
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+    KSTATIC  shift, and go to state 17
+
+    $default  reduce using rule 21 (FieldList)
+
+    VariableDef  go to state 18
+    Variable     go to state 19
+    Type         go to state 20
+    FunctionDef  go to state 21
+    FieldList    go to state 22
+    Field        go to state 23
+
+
+state 10
+
+    2 ClassDefList: ClassDef ClassDefList .
+
+    $default  reduce using rule 2 (ClassDefList)
+
+
+state 11
+
+   18 ClassDef: KCLASS IDENTIFIER KEXTENDS IDENTIFIER . PLBBB FieldList PRBBB
+
+    PLBBB  shift, and go to state 24
+
+
+state 12
+
+    6 Type: KINT .
+
+    $default  reduce using rule 6 (Type)
+
+
+state 13
+
+    7 Type: KBOOL .
+
+    $default  reduce using rule 7 (Type)
+
+
+state 14
+
+    8 Type: KSTRING .
+
+    $default  reduce using rule 8 (Type)
+
+
+state 15
+
+    9 Type: KVOID .
+
+    $default  reduce using rule 9 (Type)
+
+
+state 16
+
+   10 Type: KCLASS . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 25
+
+
+state 17
+
+   16 FunctionDef: KSTATIC . Type IDENTIFIER OLB Formals ORB StmtBlock
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+
+    Type  go to state 26
+
+
+state 18
+
+   22 Field: VariableDef .
+
+    $default  reduce using rule 22 (Field)
+
+
+state 19
+
+    4 VariableDef: Variable . PSEP
+
+    PSEP  shift, and go to state 27
+
+
+state 20
+
+    5 Variable: Type . IDENTIFIER
+   11 Type: Type . PLBB PRBB
+   17 FunctionDef: Type . IDENTIFIER OLB Formals ORB StmtBlock
+
+    IDENTIFIER  shift, and go to state 28
+    PLBB        shift, and go to state 29
+
+
+state 21
+
+   23 Field: FunctionDef .
+
+    $default  reduce using rule 23 (Field)
+
+
+state 22
+
+   19 ClassDef: KCLASS IDENTIFIER PLBBB FieldList . PRBBB
+
+    PRBBB  shift, and go to state 30
+
+
+state 23
+
+   20 FieldList: Field . FieldList
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+    KSTATIC  shift, and go to state 17
+
+    $default  reduce using rule 21 (FieldList)
+
+    VariableDef  go to state 18
+    Variable     go to state 19
+    Type         go to state 20
+    FunctionDef  go to state 21
+    FieldList    go to state 31
+    Field        go to state 23
+
+
+state 24
+
+   18 ClassDef: KCLASS IDENTIFIER KEXTENDS IDENTIFIER PLBBB . FieldList PRBBB
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+    KSTATIC  shift, and go to state 17
+
+    $default  reduce using rule 21 (FieldList)
+
+    VariableDef  go to state 18
+    Variable     go to state 19
+    Type         go to state 20
+    FunctionDef  go to state 21
+    FieldList    go to state 32
+    Field        go to state 23
+
+
+state 25
+
+   10 Type: KCLASS IDENTIFIER .
+
+    $default  reduce using rule 10 (Type)
+
+
+state 26
+
+   11 Type: Type . PLBB PRBB
+   16 FunctionDef: KSTATIC Type . IDENTIFIER OLB Formals ORB StmtBlock
+
+    IDENTIFIER  shift, and go to state 33
+    PLBB        shift, and go to state 29
+
+
+state 27
+
+    4 VariableDef: Variable PSEP .
+
+    $default  reduce using rule 4 (VariableDef)
+
+
+state 28
+
+    5 Variable: Type IDENTIFIER .
+   17 FunctionDef: Type IDENTIFIER . OLB Formals ORB StmtBlock
+
+    OLB  shift, and go to state 34
+
+    $default  reduce using rule 5 (Variable)
+
+
+state 29
+
+   11 Type: Type PLBB . PRBB
+
+    PRBB  shift, and go to state 35
+
+
+state 30
+
+   19 ClassDef: KCLASS IDENTIFIER PLBBB FieldList PRBBB .
+
+    $default  reduce using rule 19 (ClassDef)
+
+
+state 31
+
+   20 FieldList: Field FieldList .
+
+    $default  reduce using rule 20 (FieldList)
+
+
+state 32
+
+   18 ClassDef: KCLASS IDENTIFIER KEXTENDS IDENTIFIER PLBBB FieldList . PRBBB
+
+    PRBBB  shift, and go to state 36
+
+
+state 33
+
+   16 FunctionDef: KSTATIC Type IDENTIFIER . OLB Formals ORB StmtBlock
+
+    OLB  shift, and go to state 37
+
+
+state 34
+
+   17 FunctionDef: Type IDENTIFIER OLB . Formals ORB StmtBlock
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+
+    $default  reduce using rule 13 (Formals)
+
+    Variable  go to state 38
+    Type      go to state 39
+    Formals   go to state 40
+
+
+state 35
+
+   11 Type: Type PLBB PRBB .
+
+    $default  reduce using rule 11 (Type)
+
+
+state 36
+
+   18 ClassDef: KCLASS IDENTIFIER KEXTENDS IDENTIFIER PLBBB FieldList PRBBB .
+
+    $default  reduce using rule 18 (ClassDef)
+
+
+state 37
+
+   16 FunctionDef: KSTATIC Type IDENTIFIER OLB . Formals ORB StmtBlock
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+
+    $default  reduce using rule 13 (Formals)
+
+    Variable  go to state 38
+    Type      go to state 39
+    Formals   go to state 41
+
+
+state 38
+
+   12 Formals: Variable . VariableList
+
+    PCOMMA  shift, and go to state 42
+
+    $default  reduce using rule 15 (VariableList)
+
+    VariableList  go to state 43
+
+
+state 39
+
+    5 Variable: Type . IDENTIFIER
+   11 Type: Type . PLBB PRBB
+
+    IDENTIFIER  shift, and go to state 44
+    PLBB        shift, and go to state 29
+
+
+state 40
+
+   17 FunctionDef: Type IDENTIFIER OLB Formals . ORB StmtBlock
+
+    ORB  shift, and go to state 45
+
+
+state 41
+
+   16 FunctionDef: KSTATIC Type IDENTIFIER OLB Formals . ORB StmtBlock
+
+    ORB  shift, and go to state 46
+
+
+state 42
+
+   14 VariableList: PCOMMA . Variable VariableList
+
+    KINT     shift, and go to state 12
+    KBOOL    shift, and go to state 13
+    KSTRING  shift, and go to state 14
+    KVOID    shift, and go to state 15
+    KCLASS   shift, and go to state 16
+
+    Variable  go to state 47
+    Type      go to state 39
+
+
+state 43
+
+   12 Formals: Variable VariableList .
+
+    $default  reduce using rule 12 (Formals)
+
+
+state 44
+
+    5 Variable: Type IDENTIFIER .
+
+    $default  reduce using rule 5 (Variable)
+
+
+state 45
+
+   17 FunctionDef: Type IDENTIFIER OLB Formals ORB . StmtBlock
+
+    PLBBB  shift, and go to state 48
+
+    StmtBlock  go to state 49
+
+
+state 46
+
+   16 FunctionDef: KSTATIC Type IDENTIFIER OLB Formals ORB . StmtBlock
+
+    PLBBB  shift, and go to state 48
+
+    StmtBlock  go to state 50
+
+
+state 47
+
+   14 VariableList: PCOMMA Variable . VariableList
+
+    PCOMMA  shift, and go to state 42
+
+    $default  reduce using rule 15 (VariableList)
+
+    VariableList  go to state 51
+
+
+state 48
+
+   24 StmtBlock: PLBBB . StmtList PRBBB
+
+    IDENTIFIER    shift, and go to state 52
+    KINT          shift, and go to state 12
+    KBOOL         shift, and go to state 13
+    KSTRING       shift, and go to state 14
+    KVOID         shift, and go to state 15
+    KCLASS        shift, and go to state 16
+    OLB           shift, and go to state 53
+    PLBBB         shift, and go to state 48
+    KFOR          shift, and go to state 54
+    KWHILE        shift, and go to state 55
+    KIF           shift, and go to state 56
+    KRETURN       shift, and go to state 57
+    KBREAK        shift, and go to state 58
+    KPRINT        shift, and go to state 59
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    PSEP      reduce using rule 38 (SimpleStmt)
+    $default  reduce using rule 26 (StmtList)
+
+    VariableDef  go to state 71
+    Variable     go to state 19
+    Type         go to state 39
+    StmtBlock    go to state 72
+    StmtList     go to state 73
+    Stmt         go to state 74
+    SimpleStmt   go to state 75
+    LValue       go to state 76
+    Call         go to state 77
+    ForStmt      go to state 78
+    WhileStmt    go to state 79
+    IfStmt       go to state 80
+    ReturnStmt   go to state 81
+    BreakStmt    go to state 82
+    PrintStmt    go to state 83
+    Expr         go to state 84
+    Constant     go to state 85
+
+
+state 49
+
+   17 FunctionDef: Type IDENTIFIER OLB Formals ORB StmtBlock .
+
+    $default  reduce using rule 17 (FunctionDef)
+
+
+state 50
+
+   16 FunctionDef: KSTATIC Type IDENTIFIER OLB Formals ORB StmtBlock .
+
+    $default  reduce using rule 16 (FunctionDef)
+
+
+state 51
+
+   14 VariableList: PCOMMA Variable VariableList .
+
+    $default  reduce using rule 14 (VariableList)
+
+
+state 52
+
+   40 LValue: IDENTIFIER .
+   43 Call: IDENTIFIER . OLB Actuals ORB
+
+    OLB  shift, and go to state 86
+
+    $default  reduce using rule 40 (LValue)
+
+
+state 53
+
+   61 Expr: OLB . Expr ORB
+   82     | OLB . KCLASS IDENTIFIER ORB Expr
+
+    IDENTIFIER    shift, and go to state 52
+    KCLASS        shift, and go to state 87
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 90
+    Constant  go to state 85
+
+
+state 54
+
+   48 ForStmt: KFOR . OLB SimpleStmt PSEP BoolExpr PSEP SimpleStmt ORB Stmt
+
+    OLB  shift, and go to state 91
+
+
+state 55
+
+   49 WhileStmt: KWHILE . OLB BoolExpr ORB Stmt
+
+    OLB  shift, and go to state 92
+
+
+state 56
+
+   50 IfStmt: KIF . OLB BoolExpr ORB Stmt KELSE Stmt
+   51       | KIF . OLB BoolExpr ORB Stmt
+
+    OLB  shift, and go to state 93
+
+
+state 57
+
+   52 ReturnStmt: KRETURN .
+   53           | KRETURN . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 52 (ReturnStmt)
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 94
+    Constant  go to state 85
+
+
+state 58
+
+   54 BreakStmt: KBREAK .
+
+    $default  reduce using rule 54 (BreakStmt)
+
+
+state 59
+
+   55 PrintStmt: KPRINT . OLB Expr ExprList ORB
+
+    OLB  shift, and go to state 95
+
+
+state 60
+
+   59 Expr: KTHIS .
+
+    $default  reduce using rule 59 (Expr)
+
+
+state 61
+
+   67 Expr: OSUB . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 96
+    Constant  go to state 85
+
+
+state 62
+
+   76 Expr: ONOT . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 97
+    Constant  go to state 85
+
+
+state 63
+
+   77 Expr: KREADINTEGER . OLB ORB
+
+    OLB  shift, and go to state 98
+
+
+state 64
+
+   78 Expr: KREADLINE . OLB ORB
+
+    OLB  shift, and go to state 99
+
+
+state 65
+
+   79 Expr: KNEW . IDENTIFIER OLB ORB
+   80     | KNEW . Type PLBB Expr PRBB
+
+    IDENTIFIER  shift, and go to state 100
+    KINT        shift, and go to state 12
+    KBOOL       shift, and go to state 13
+    KSTRING     shift, and go to state 14
+    KVOID       shift, and go to state 15
+    KCLASS      shift, and go to state 16
+
+    Type  go to state 101
+
+
+state 66
+
+   81 Expr: KINSTANCEOF . OLB Expr PCOMMA IDENTIFIER ORB
+
+    OLB  shift, and go to state 102
+
+
+state 67
+
+   83 Constant: INTCONST .
+
+    $default  reduce using rule 83 (Constant)
+
+
+state 68
+
+   84 Constant: BOOLCONST .
+
+    $default  reduce using rule 84 (Constant)
+
+
+state 69
+
+   85 Constant: STRINGCONST .
+
+    $default  reduce using rule 85 (Constant)
+
+
+state 70
+
+   86 Constant: KNULL .
+
+    $default  reduce using rule 86 (Constant)
+
+
+state 71
+
+   27 Stmt: VariableDef .
+
+    $default  reduce using rule 27 (Stmt)
+
+
+state 72
+
+   35 Stmt: StmtBlock .
+
+    $default  reduce using rule 35 (Stmt)
+
+
+state 73
+
+   24 StmtBlock: PLBBB StmtList . PRBBB
+
+    PRBBB  shift, and go to state 103
+
+
+state 74
+
+   25 StmtList: Stmt . StmtList
+
+    IDENTIFIER    shift, and go to state 52
+    KINT          shift, and go to state 12
+    KBOOL         shift, and go to state 13
+    KSTRING       shift, and go to state 14
+    KVOID         shift, and go to state 15
+    KCLASS        shift, and go to state 16
+    OLB           shift, and go to state 53
+    PLBBB         shift, and go to state 48
+    KFOR          shift, and go to state 54
+    KWHILE        shift, and go to state 55
+    KIF           shift, and go to state 56
+    KRETURN       shift, and go to state 57
+    KBREAK        shift, and go to state 58
+    KPRINT        shift, and go to state 59
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    PSEP      reduce using rule 38 (SimpleStmt)
+    $default  reduce using rule 26 (StmtList)
+
+    VariableDef  go to state 71
+    Variable     go to state 19
+    Type         go to state 39
+    StmtBlock    go to state 72
+    StmtList     go to state 104
+    Stmt         go to state 74
+    SimpleStmt   go to state 75
+    LValue       go to state 76
+    Call         go to state 77
+    ForStmt      go to state 78
+    WhileStmt    go to state 79
+    IfStmt       go to state 80
+    ReturnStmt   go to state 81
+    BreakStmt    go to state 82
+    PrintStmt    go to state 83
+    Expr         go to state 84
+    Constant     go to state 85
+
+
+state 75
+
+   28 Stmt: SimpleStmt . PSEP
+
+    PSEP  shift, and go to state 105
+
+
+state 76
+
+   36 SimpleStmt: LValue . OASSIGN Expr
+   58 Expr: LValue .
+
+    OASSIGN  shift, and go to state 106
+
+    $default  reduce using rule 58 (Expr)
+
+
+state 77
+
+   37 SimpleStmt: Call .
+   60 Expr: Call .
+
+    ORB       reduce using rule 37 (SimpleStmt)
+    PSEP      reduce using rule 37 (SimpleStmt)
+    $default  reduce using rule 60 (Expr)
+
+
+state 78
+
+   31 Stmt: ForStmt .
+
+    $default  reduce using rule 31 (Stmt)
+
+
+state 79
+
+   30 Stmt: WhileStmt .
+
+    $default  reduce using rule 30 (Stmt)
+
+
+state 80
+
+   29 Stmt: IfStmt .
+
+    $default  reduce using rule 29 (Stmt)
+
+
+state 81
+
+   33 Stmt: ReturnStmt . PSEP
+
+    PSEP  shift, and go to state 107
+
+
+state 82
+
+   32 Stmt: BreakStmt . PSEP
+
+    PSEP  shift, and go to state 108
+
+
+state 83
+
+   34 Stmt: PrintStmt . PSEP
+
+    PSEP  shift, and go to state 109
+
+
+state 84
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+
+state 85
+
+   57 Expr: Constant .
+
+    $default  reduce using rule 57 (Expr)
+
+
+state 86
+
+   43 Call: IDENTIFIER OLB . Actuals ORB
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 45 (Actuals)
+
+    LValue    go to state 88
+    Call      go to state 89
+    Actuals   go to state 125
+    Expr      go to state 126
+    Constant  go to state 85
+
+
+state 87
+
+   82 Expr: OLB KCLASS . IDENTIFIER ORB Expr
+
+    IDENTIFIER  shift, and go to state 127
+
+
+state 88
+
+   58 Expr: LValue .
+
+    $default  reduce using rule 58 (Expr)
+
+
+state 89
+
+   60 Expr: Call .
+
+    $default  reduce using rule 60 (Expr)
+
+
+state 90
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   61 Expr: OLB Expr . ORB
+   62     | Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    ORB     shift, and go to state 128
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+
+state 91
+
+   48 ForStmt: KFOR OLB . SimpleStmt PSEP BoolExpr PSEP SimpleStmt ORB Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 38 (SimpleStmt)
+
+    SimpleStmt  go to state 129
+    LValue      go to state 76
+    Call        go to state 77
+    Expr        go to state 84
+    Constant    go to state 85
+
+
+state 92
+
+   49 WhileStmt: KWHILE OLB . BoolExpr ORB Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    BoolExpr  go to state 130
+    Expr      go to state 131
+    Constant  go to state 85
+
+
+state 93
+
+   50 IfStmt: KIF OLB . BoolExpr ORB Stmt KELSE Stmt
+   51       | KIF OLB . BoolExpr ORB Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    BoolExpr  go to state 132
+    Expr      go to state 131
+    Constant  go to state 85
+
+
+state 94
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   53 ReturnStmt: KRETURN Expr .
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 53 (ReturnStmt)
+
+
+state 95
+
+   55 PrintStmt: KPRINT OLB . Expr ExprList ORB
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 133
+    Constant  go to state 85
+
+
+state 96
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   67     | OSUB Expr .
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 67 (Expr)
+
+
+state 97
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+   76     | ONOT Expr .
+
+    PLBB    shift, and go to state 110
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 76 (Expr)
+
+
+state 98
+
+   77 Expr: KREADINTEGER OLB . ORB
+
+    ORB  shift, and go to state 134
+
+
+state 99
+
+   78 Expr: KREADLINE OLB . ORB
+
+    ORB  shift, and go to state 135
+
+
+state 100
+
+   79 Expr: KNEW IDENTIFIER . OLB ORB
+
+    OLB  shift, and go to state 136
+
+
+state 101
+
+   11 Type: Type . PLBB PRBB
+   80 Expr: KNEW Type . PLBB Expr PRBB
+
+    PLBB  shift, and go to state 137
+
+
+state 102
+
+   81 Expr: KINSTANCEOF OLB . Expr PCOMMA IDENTIFIER ORB
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 138
+    Constant  go to state 85
+
+
+state 103
+
+   24 StmtBlock: PLBBB StmtList PRBBB .
+
+    $default  reduce using rule 24 (StmtBlock)
+
+
+state 104
+
+   25 StmtList: Stmt StmtList .
+
+    $default  reduce using rule 25 (StmtList)
+
+
+state 105
+
+   28 Stmt: SimpleStmt PSEP .
+
+    $default  reduce using rule 28 (Stmt)
+
+
+state 106
+
+   36 SimpleStmt: LValue OASSIGN . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 139
+    Constant  go to state 85
+
+
+state 107
+
+   33 Stmt: ReturnStmt PSEP .
+
+    $default  reduce using rule 33 (Stmt)
+
+
+state 108
+
+   32 Stmt: BreakStmt PSEP .
+
+    $default  reduce using rule 32 (Stmt)
+
+
+state 109
+
+   34 Stmt: PrintStmt PSEP .
+
+    $default  reduce using rule 34 (Stmt)
+
+
+state 110
+
+   41 LValue: Expr PLBB . Expr PRBB
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 140
+    Constant  go to state 85
+
+
+state 111
+
+   62 Expr: Expr OADD . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 141
+    Constant  go to state 85
+
+
+state 112
+
+   63 Expr: Expr OSUB . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 142
+    Constant  go to state 85
+
+
+state 113
+
+   64 Expr: Expr OMUL . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 143
+    Constant  go to state 85
+
+
+state 114
+
+   65 Expr: Expr ODIV . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 144
+    Constant  go to state 85
+
+
+state 115
+
+   66 Expr: Expr OIDIV . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 145
+    Constant  go to state 85
+
+
+state 116
+
+   68 Expr: Expr OLT . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 146
+    Constant  go to state 85
+
+
+state 117
+
+   69 Expr: Expr OLE . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 147
+    Constant  go to state 85
+
+
+state 118
+
+   70 Expr: Expr OGT . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 148
+    Constant  go to state 85
+
+
+state 119
+
+   71 Expr: Expr OGE . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 149
+    Constant  go to state 85
+
+
+state 120
+
+   72 Expr: Expr OEQU . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 150
+    Constant  go to state 85
+
+
+state 121
+
+   73 Expr: Expr ONE . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 151
+    Constant  go to state 85
+
+
+state 122
+
+   74 Expr: Expr OAND . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 152
+    Constant  go to state 85
+
+
+state 123
+
+   75 Expr: Expr OOR . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 153
+    Constant  go to state 85
+
+
+state 124
+
+   39 LValue: Expr PPOINT . IDENTIFIER
+   42 Call: Expr PPOINT . IDENTIFIER OLB Actuals ORB
+
+    IDENTIFIER  shift, and go to state 154
+
+
+state 125
+
+   43 Call: IDENTIFIER OLB Actuals . ORB
+
+    ORB  shift, and go to state 155
+
+
+state 126
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   44 Actuals: Expr . ExprList
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PCOMMA  shift, and go to state 156
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 47 (ExprList)
+
+    ExprList  go to state 157
+
+
+state 127
+
+   82 Expr: OLB KCLASS IDENTIFIER . ORB Expr
+
+    ORB  shift, and go to state 158
+
+
+state 128
+
+   61 Expr: OLB Expr ORB .
+
+    $default  reduce using rule 61 (Expr)
+
+
+state 129
+
+   48 ForStmt: KFOR OLB SimpleStmt . PSEP BoolExpr PSEP SimpleStmt ORB Stmt
+
+    PSEP  shift, and go to state 159
+
+
+state 130
+
+   49 WhileStmt: KWHILE OLB BoolExpr . ORB Stmt
+
+    ORB  shift, and go to state 160
+
+
+state 131
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   56 BoolExpr: Expr .
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 56 (BoolExpr)
+
+
+state 132
+
+   50 IfStmt: KIF OLB BoolExpr . ORB Stmt KELSE Stmt
+   51       | KIF OLB BoolExpr . ORB Stmt
+
+    ORB  shift, and go to state 161
+
+
+state 133
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   55 PrintStmt: KPRINT OLB Expr . ExprList ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PCOMMA  shift, and go to state 156
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 47 (ExprList)
+
+    ExprList  go to state 162
+
+
+state 134
+
+   77 Expr: KREADINTEGER OLB ORB .
+
+    $default  reduce using rule 77 (Expr)
+
+
+state 135
+
+   78 Expr: KREADLINE OLB ORB .
+
+    $default  reduce using rule 78 (Expr)
+
+
+state 136
+
+   79 Expr: KNEW IDENTIFIER OLB . ORB
+
+    ORB  shift, and go to state 163
+
+
+state 137
+
+   11 Type: Type PLBB . PRBB
+   80 Expr: KNEW Type PLBB . Expr PRBB
+
+    IDENTIFIER    shift, and go to state 52
+    PRBB          shift, and go to state 35
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 164
+    Constant  go to state 85
+
+
+state 138
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+   81     | KINSTANCEOF OLB Expr . PCOMMA IDENTIFIER ORB
+
+    PLBB    shift, and go to state 110
+    PCOMMA  shift, and go to state 165
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+
+state 139
+
+   36 SimpleStmt: LValue OASSIGN Expr .
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 36 (SimpleStmt)
+
+
+state 140
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   41       | Expr PLBB Expr . PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PRBB    shift, and go to state 166
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+
+state 141
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   62     | Expr OADD Expr .
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 62 (Expr)
+
+
+state 142
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   63     | Expr OSUB Expr .
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 63 (Expr)
+
+
+state 143
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   64     | Expr OMUL Expr .
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 64 (Expr)
+
+
+state 144
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   65     | Expr ODIV Expr .
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 65 (Expr)
+
+
+state 145
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   66     | Expr OIDIV Expr .
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 66 (Expr)
+
+
+state 146
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   68     | Expr OLT Expr .
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 68 (Expr)
+
+
+state 147
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   69     | Expr OLE Expr .
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 69 (Expr)
+
+
+state 148
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   70     | Expr OGT Expr .
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 70 (Expr)
+
+
+state 149
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   71     | Expr OGE Expr .
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 71 (Expr)
+
+
+state 150
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   72     | Expr OEQU Expr .
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 72 (Expr)
+
+
+state 151
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   73     | Expr ONE Expr .
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 73 (Expr)
+
+
+state 152
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   74     | Expr OAND Expr .
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 74 (Expr)
+
+
+state 153
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+   75     | Expr OOR Expr .
+
+    PLBB    shift, and go to state 110
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 75 (Expr)
+
+
+state 154
+
+   39 LValue: Expr PPOINT IDENTIFIER .
+   42 Call: Expr PPOINT IDENTIFIER . OLB Actuals ORB
+
+    OLB  shift, and go to state 167
+
+    $default  reduce using rule 39 (LValue)
+
+
+state 155
+
+   43 Call: IDENTIFIER OLB Actuals ORB .
+
+    $default  reduce using rule 43 (Call)
+
+
+state 156
+
+   46 ExprList: PCOMMA . Expr ExprList
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 168
+    Constant  go to state 85
+
+
+state 157
+
+   44 Actuals: Expr ExprList .
+
+    $default  reduce using rule 44 (Actuals)
+
+
+state 158
+
+   82 Expr: OLB KCLASS IDENTIFIER ORB . Expr
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    Expr      go to state 169
+    Constant  go to state 85
+
+
+state 159
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP . BoolExpr PSEP SimpleStmt ORB Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    LValue    go to state 88
+    Call      go to state 89
+    BoolExpr  go to state 170
+    Expr      go to state 131
+    Constant  go to state 85
+
+
+state 160
+
+   49 WhileStmt: KWHILE OLB BoolExpr ORB . Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    KINT          shift, and go to state 12
+    KBOOL         shift, and go to state 13
+    KSTRING       shift, and go to state 14
+    KVOID         shift, and go to state 15
+    KCLASS        shift, and go to state 16
+    OLB           shift, and go to state 53
+    PLBBB         shift, and go to state 48
+    KFOR          shift, and go to state 54
+    KWHILE        shift, and go to state 55
+    KIF           shift, and go to state 56
+    KRETURN       shift, and go to state 57
+    KBREAK        shift, and go to state 58
+    KPRINT        shift, and go to state 59
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 38 (SimpleStmt)
+
+    VariableDef  go to state 71
+    Variable     go to state 19
+    Type         go to state 39
+    StmtBlock    go to state 72
+    Stmt         go to state 171
+    SimpleStmt   go to state 75
+    LValue       go to state 76
+    Call         go to state 77
+    ForStmt      go to state 78
+    WhileStmt    go to state 79
+    IfStmt       go to state 80
+    ReturnStmt   go to state 81
+    BreakStmt    go to state 82
+    PrintStmt    go to state 83
+    Expr         go to state 84
+    Constant     go to state 85
+
+
+state 161
+
+   50 IfStmt: KIF OLB BoolExpr ORB . Stmt KELSE Stmt
+   51       | KIF OLB BoolExpr ORB . Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    KINT          shift, and go to state 12
+    KBOOL         shift, and go to state 13
+    KSTRING       shift, and go to state 14
+    KVOID         shift, and go to state 15
+    KCLASS        shift, and go to state 16
+    OLB           shift, and go to state 53
+    PLBBB         shift, and go to state 48
+    KFOR          shift, and go to state 54
+    KWHILE        shift, and go to state 55
+    KIF           shift, and go to state 56
+    KRETURN       shift, and go to state 57
+    KBREAK        shift, and go to state 58
+    KPRINT        shift, and go to state 59
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 38 (SimpleStmt)
+
+    VariableDef  go to state 71
+    Variable     go to state 19
+    Type         go to state 39
+    StmtBlock    go to state 72
+    Stmt         go to state 172
+    SimpleStmt   go to state 75
+    LValue       go to state 76
+    Call         go to state 77
+    ForStmt      go to state 78
+    WhileStmt    go to state 79
+    IfStmt       go to state 80
+    ReturnStmt   go to state 81
+    BreakStmt    go to state 82
+    PrintStmt    go to state 83
+    Expr         go to state 84
+    Constant     go to state 85
+
+
+state 162
+
+   55 PrintStmt: KPRINT OLB Expr ExprList . ORB
+
+    ORB  shift, and go to state 173
+
+
+state 163
+
+   79 Expr: KNEW IDENTIFIER OLB ORB .
+
+    $default  reduce using rule 79 (Expr)
+
+
+state 164
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+   80     | KNEW Type PLBB Expr . PRBB
+
+    PLBB    shift, and go to state 110
+    PRBB    shift, and go to state 174
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+
+state 165
+
+   81 Expr: KINSTANCEOF OLB Expr PCOMMA . IDENTIFIER ORB
+
+    IDENTIFIER  shift, and go to state 175
+
+
+state 166
+
+   41 LValue: Expr PLBB Expr PRBB .
+
+    $default  reduce using rule 41 (LValue)
+
+
+state 167
+
+   42 Call: Expr PPOINT IDENTIFIER OLB . Actuals ORB
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 45 (Actuals)
+
+    LValue    go to state 88
+    Call      go to state 89
+    Actuals   go to state 176
+    Expr      go to state 126
+    Constant  go to state 85
+
+
+state 168
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   46 ExprList: PCOMMA Expr . ExprList
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+
+    PLBB    shift, and go to state 110
+    PCOMMA  shift, and go to state 156
+    OADD    shift, and go to state 111
+    OSUB    shift, and go to state 112
+    OMUL    shift, and go to state 113
+    ODIV    shift, and go to state 114
+    OIDIV   shift, and go to state 115
+    OLT     shift, and go to state 116
+    OLE     shift, and go to state 117
+    OGT     shift, and go to state 118
+    OGE     shift, and go to state 119
+    OEQU    shift, and go to state 120
+    ONE     shift, and go to state 121
+    OAND    shift, and go to state 122
+    OOR     shift, and go to state 123
+    PPOINT  shift, and go to state 124
+
+    $default  reduce using rule 47 (ExprList)
+
+    ExprList  go to state 177
+
+
+state 169
+
+   39 LValue: Expr . PPOINT IDENTIFIER
+   41       | Expr . PLBB Expr PRBB
+   42 Call: Expr . PPOINT IDENTIFIER OLB Actuals ORB
+   62 Expr: Expr . OADD Expr
+   63     | Expr . OSUB Expr
+   64     | Expr . OMUL Expr
+   65     | Expr . ODIV Expr
+   66     | Expr . OIDIV Expr
+   68     | Expr . OLT Expr
+   69     | Expr . OLE Expr
+   70     | Expr . OGT Expr
+   71     | Expr . OGE Expr
+   72     | Expr . OEQU Expr
+   73     | Expr . ONE Expr
+   74     | Expr . OAND Expr
+   75     | Expr . OOR Expr
+   82     | OLB KCLASS IDENTIFIER ORB Expr .
+
+    $default  reduce using rule 82 (Expr)
+
+
+state 170
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP BoolExpr . PSEP SimpleStmt ORB Stmt
+
+    PSEP  shift, and go to state 178
+
+
+state 171
+
+   49 WhileStmt: KWHILE OLB BoolExpr ORB Stmt .
+
+    $default  reduce using rule 49 (WhileStmt)
+
+
+state 172
+
+   50 IfStmt: KIF OLB BoolExpr ORB Stmt . KELSE Stmt
+   51       | KIF OLB BoolExpr ORB Stmt .
+
+    KELSE  shift, and go to state 179
+
+    $default  reduce using rule 51 (IfStmt)
+
+
+state 173
+
+   55 PrintStmt: KPRINT OLB Expr ExprList ORB .
+
+    $default  reduce using rule 55 (PrintStmt)
+
+
+state 174
+
+   80 Expr: KNEW Type PLBB Expr PRBB .
+
+    $default  reduce using rule 80 (Expr)
+
+
+state 175
+
+   81 Expr: KINSTANCEOF OLB Expr PCOMMA IDENTIFIER . ORB
+
+    ORB  shift, and go to state 180
+
+
+state 176
+
+   42 Call: Expr PPOINT IDENTIFIER OLB Actuals . ORB
+
+    ORB  shift, and go to state 181
+
+
+state 177
+
+   46 ExprList: PCOMMA Expr ExprList .
+
+    $default  reduce using rule 46 (ExprList)
+
+
+state 178
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP BoolExpr PSEP . SimpleStmt ORB Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    OLB           shift, and go to state 53
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 38 (SimpleStmt)
+
+    SimpleStmt  go to state 182
+    LValue      go to state 76
+    Call        go to state 77
+    Expr        go to state 84
+    Constant    go to state 85
+
+
+state 179
+
+   50 IfStmt: KIF OLB BoolExpr ORB Stmt KELSE . Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    KINT          shift, and go to state 12
+    KBOOL         shift, and go to state 13
+    KSTRING       shift, and go to state 14
+    KVOID         shift, and go to state 15
+    KCLASS        shift, and go to state 16
+    OLB           shift, and go to state 53
+    PLBBB         shift, and go to state 48
+    KFOR          shift, and go to state 54
+    KWHILE        shift, and go to state 55
+    KIF           shift, and go to state 56
+    KRETURN       shift, and go to state 57
+    KBREAK        shift, and go to state 58
+    KPRINT        shift, and go to state 59
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 38 (SimpleStmt)
+
+    VariableDef  go to state 71
+    Variable     go to state 19
+    Type         go to state 39
+    StmtBlock    go to state 72
+    Stmt         go to state 183
+    SimpleStmt   go to state 75
+    LValue       go to state 76
+    Call         go to state 77
+    ForStmt      go to state 78
+    WhileStmt    go to state 79
+    IfStmt       go to state 80
+    ReturnStmt   go to state 81
+    BreakStmt    go to state 82
+    PrintStmt    go to state 83
+    Expr         go to state 84
+    Constant     go to state 85
+
+
+state 180
+
+   81 Expr: KINSTANCEOF OLB Expr PCOMMA IDENTIFIER ORB .
+
+    $default  reduce using rule 81 (Expr)
+
+
+state 181
+
+   42 Call: Expr PPOINT IDENTIFIER OLB Actuals ORB .
+
+    $default  reduce using rule 42 (Call)
+
+
+state 182
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP BoolExpr PSEP SimpleStmt . ORB Stmt
+
+    ORB  shift, and go to state 184
+
+
+state 183
+
+   50 IfStmt: KIF OLB BoolExpr ORB Stmt KELSE Stmt .
+
+    $default  reduce using rule 50 (IfStmt)
+
+
+state 184
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP BoolExpr PSEP SimpleStmt ORB . Stmt
+
+    IDENTIFIER    shift, and go to state 52
+    KINT          shift, and go to state 12
+    KBOOL         shift, and go to state 13
+    KSTRING       shift, and go to state 14
+    KVOID         shift, and go to state 15
+    KCLASS        shift, and go to state 16
+    OLB           shift, and go to state 53
+    PLBBB         shift, and go to state 48
+    KFOR          shift, and go to state 54
+    KWHILE        shift, and go to state 55
+    KIF           shift, and go to state 56
+    KRETURN       shift, and go to state 57
+    KBREAK        shift, and go to state 58
+    KPRINT        shift, and go to state 59
+    KTHIS         shift, and go to state 60
+    OSUB          shift, and go to state 61
+    ONOT          shift, and go to state 62
+    KREADINTEGER  shift, and go to state 63
+    KREADLINE     shift, and go to state 64
+    KNEW          shift, and go to state 65
+    KINSTANCEOF   shift, and go to state 66
+    INTCONST      shift, and go to state 67
+    BOOLCONST     shift, and go to state 68
+    STRINGCONST   shift, and go to state 69
+    KNULL         shift, and go to state 70
+
+    $default  reduce using rule 38 (SimpleStmt)
+
+    VariableDef  go to state 71
+    Variable     go to state 19
+    Type         go to state 39
+    StmtBlock    go to state 72
+    Stmt         go to state 185
+    SimpleStmt   go to state 75
+    LValue       go to state 76
+    Call         go to state 77
+    ForStmt      go to state 78
+    WhileStmt    go to state 79
+    IfStmt       go to state 80
+    ReturnStmt   go to state 81
+    BreakStmt    go to state 82
+    PrintStmt    go to state 83
+    Expr         go to state 84
+    Constant     go to state 85
+
+
+state 185
+
+   48 ForStmt: KFOR OLB SimpleStmt PSEP BoolExpr PSEP SimpleStmt ORB Stmt .
+
+    $default  reduce using rule 48 (ForStmt)
