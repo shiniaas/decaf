@@ -1,3 +1,4 @@
-bison -d decaf.y
+bison -d -t decaf.y
 flex decaf.l
-gcc main.c decaf.tab.c -ll -o result
+gcc tree.c decaf.tab.c  -ll -o result
+./result my.decaf

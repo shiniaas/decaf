@@ -373,8 +373,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 51
-#define YY_END_OF_BUFFER 52
+#define YY_NUM_RULES 52
+#define YY_END_OF_BUFFER 53
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -384,14 +384,14 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[142] =
     {   0,
-        0,    0,   52,   50,   48,   48,   38,   50,   28,   50,
-       39,   40,   26,   24,   43,   25,   41,   27,   22,   22,
-       42,   30,   34,   32,   21,   21,   21,   44,   45,   21,
+        0,    0,   53,   51,   50,   50,   39,   51,   29,   51,
+       40,   41,   27,   25,   44,   26,   42,   28,   22,   22,
+       43,   31,   35,   33,   21,   21,   21,   45,   46,   21,
        21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
-       46,   50,   47,   35,    0,   23,   36,   22,   22,   49,
-        0,   29,   33,   31,   21,   21,   21,   21,   21,   21,
+       47,   51,   48,   36,    0,   24,   37,   22,   22,   49,
+        0,   30,   34,   32,   21,   21,   21,   21,   21,   21,
        21,   21,   21,   21,    7,   21,   21,   21,   21,   21,
-       21,   21,   21,   21,   37,   49,   22,   21,   21,   21,
+       21,   21,   21,   21,   38,   49,   23,   21,   21,   21,
        21,   21,   21,   21,   21,    6,   21,    8,    9,   21,
        21,   21,   21,   21,   21,   21,   21,   21,   21,    1,
 
@@ -543,11 +543,11 @@ static yyconst flex_int16_t yy_chk[227] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[52] =
+static yyconst flex_int32_t yy_rule_can_match_eol[53] =
     {   0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -565,11 +565,8 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "decaf.l"
 #line 3 "decaf.l"
-    #include "decaf.tab.h"
-    #ifndef Tree
-    	#include "tree.h"
-    #endif
-#line 573 "lex.yy.c"
+    
+#line 570 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -751,9 +748,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 66 "decaf.l"
+#line 63 "decaf.l"
 
-#line 757 "lex.yy.c"
+#line 754 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -848,261 +845,266 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 67 "decaf.l"
-{yylval.a = new_ast("TYPE", 0, yylineno);return KBOOL;}
+#line 64 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 68 "decaf.l"
-{yylval.a = new_ast("KBREAK", 0, yylineno);return KBREAK;}
+#line 65 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 69 "decaf.l"
-{yylval.a = new_ast("KCLASS", 0, yylineno);return KCLASS;}
+#line 66 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 70 "decaf.l"
-{yylval.a = new_ast("KELSE", 0, yylineno);return KELSE;}
+#line 67 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "decaf.l"
-{yylval.a = new_ast("KEXTENDS", 0, yylineno);return KEXTENDS;}
+#line 68 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 72 "decaf.l"
-{yylval.a = new_ast("KFOR'", 0, yylineno);return KFOR;}
+#line 69 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 73 "decaf.l"
-{yylval.a = new_ast("KIF", 0, yylineno);return KIF;}
+#line 70 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 74 "decaf.l"
-{yylval.a = new_ast("TYPE", 0, yylineno);return KINT;}
+#line 71 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 75 "decaf.l"
-{yylval.a = new_ast("KNEW", 0, yylineno);return KNEW;}
+#line 72 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 76 "decaf.l"
-{yylval.a = new_ast("KNULL", 0, yylineno);return KNULL;}
+#line 73 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 77 "decaf.l"
-{yylval.a = new_ast("KRETURN", 0, yylineno);return KRETURN;}
+#line 74 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 78 "decaf.l"
-{yylval.a = new_ast("TYPE", 0, yylineno);return KSTRING;}
+#line 75 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 79 "decaf.l"
-{yylval.a = new_ast("KTHIS", 0, yylineno);return KTHIS;}
+#line 76 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 80 "decaf.l"
-{yylval.a = new_ast("KVOID", 0, yylineno);return KVOID;}
+#line 77 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 81 "decaf.l"
-{yylval.a = new_ast("KWHILE", 0, yylineno);return KWHILE;}
+#line 78 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 82 "decaf.l"
-{yylval.a = new_ast("KSTATIC", 0, yylineno);return KSTATIC;}
+#line 79 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 83 "decaf.l"
-{yylval.a = new_ast("KPRINT", 0, yylineno);return KPRINT;}
+#line 80 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 84 "decaf.l"
-{yylval.a = new_ast("KREADINTEGER", 0, yylineno);return KREADINTEGER;}
+#line 81 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 85 "decaf.l"
-{yylval.a = new_ast("KINSTANCEOF", 0, yylineno);return KINSTANCEOF;}
+#line 82 "decaf.l"
+{printf("keyword %s\n", yytext);}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 86 "decaf.l"
-{yylval.a = new_ast("BOOLCONST", 0, yylineno);return BOOLCONST;}
+#line 83 "decaf.l"
+{printf("boolconst %s\n", yytext);}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 87 "decaf.l"
-{yylval.a = new_ast("IDENTIFIER", 0, yylineno);return IDENTIFIER;}
+#line 84 "decaf.l"
+{printf("identifier %s\n", yytext);}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 88 "decaf.l"
-{yylval.a = new_ast("INTCONST", 0, yylineno);return INTCONST;}
+#line 85 "decaf.l"
+{printf("intconstdec %s\n", yytext);}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 89 "decaf.l"
-{yylval.a = new_ast("STRINGCONST", 0, yylineno);return STRINGCONST;}
+#line 86 "decaf.l"
+{printf("intconsthex %s\n", yytext);}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 90 "decaf.l"
-{yylval.a = new_ast("OADD", 0, yylineno);return OADD;}
+#line 87 "decaf.l"
+{printf("stringconst %s\n", yytext);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 91 "decaf.l"
-{yylval.a = new_ast("OSUB", 0, yylineno);return OSUB;}
+#line 88 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 92 "decaf.l"
-{yylval.a = new_ast("OMUL", 0, yylineno);return OMUL;}
+#line 89 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 93 "decaf.l"
-{yylval.a = new_ast("ODIV", 0, yylineno);return ODIV;}
+#line 90 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 94 "decaf.l"
-{yylval.a = new_ast("OIDIV", 0, yylineno);return OIDIV;}
+#line 91 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 95 "decaf.l"
-{yylval.a = new_ast("OLE", 0, yylineno);return OLE;}
+#line 92 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 96 "decaf.l"
-{yylval.a = new_ast("OLT", 0, yylineno);return OLT;}
+#line 93 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 97 "decaf.l"
-{yylval.a = new_ast("OGE", 0, yylineno);return OGE;}
+#line 94 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 98 "decaf.l"
-{yylval.a = new_ast("OGT", 0, yylineno);return OGT;}
+#line 95 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 99 "decaf.l"
-{yylval.a = new_ast("OEQU", 0, yylineno);return OEQU;}
+#line 96 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 100 "decaf.l"
-{yylval.a = new_ast("OASSIGN", 0, yylineno);return OASSIGN;}
+#line 97 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 101 "decaf.l"
-{yylval.a = new_ast("ONE", 0, yylineno);return ONE;}
+#line 98 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 102 "decaf.l"
-{yylval.a = new_ast("OAND", 0, yylineno);return OAND;}
+#line 99 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 103 "decaf.l"
-{yylval.a = new_ast("OOR", 0, yylineno);return OOR;}
+#line 100 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 104 "decaf.l"
-{yylval.a = new_ast("ONOT", 0, yylineno);return ONOT;}
+#line 101 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 105 "decaf.l"
-{yylval.a = new_ast("OLB", 0, yylineno);return OLB;}
+#line 102 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 106 "decaf.l"
-{yylval.a = new_ast("ORB", 0, yylineno);return ORB;}
+#line 103 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 107 "decaf.l"
-{yylval.a = new_ast("PPOINT", 0, yylineno);return PPOINT;}
+#line 104 "decaf.l"
+{printf("operator %s\n", yytext);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 108 "decaf.l"
-{yylval.a = new_ast("PSEP", 0, yylineno);return PSEP;}
+#line 105 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 109 "decaf.l"
-{yylval.a = new_ast("PCOMMA", 0, yylineno);return PCOMMA;}
+#line 106 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 110 "decaf.l"
-{yylval.a = new_ast("PLBB", 0, yylineno);return PLBB;}
+#line 107 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 111 "decaf.l"
-{yylval.a = new_ast("PRBB", 0, yylineno);return PRBB;}
+#line 108 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 112 "decaf.l"
-{yylval.a = new_ast("PLBBB", 0, yylineno);return PLBBB;}
+#line 109 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 113 "decaf.l"
-{yylval.a = new_ast("PRBBB", 0, yylineno);return PRBBB;}
+#line 110 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 48:
-/* rule 48 can match eol */
 YY_RULE_SETUP
-#line 114 "decaf.l"
-{;}
+#line 111 "decaf.l"
+{printf("punctuation %s\n", yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 115 "decaf.l"
-{;}
+#line 112 "decaf.l"
+{printf("comment %s\n",yytext);}
 	YY_BREAK
 case 50:
+/* rule 50 can match eol */
 YY_RULE_SETUP
-#line 116 "decaf.l"
-{printf("Error type at line %d:Mysterious characters \'%s\'\n",yylineno, yytext);}
+#line 113 "decaf.l"
+{;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 117 "decaf.l"
+#line 114 "decaf.l"
+{printf("Error type at line %d:Mysterious characters \'%s\'\n",yylineno, yytext);}
+	YY_BREAK
+case 52:
+YY_RULE_SETUP
+#line 115 "decaf.l"
 ECHO;
 	YY_BREAK
-#line 1106 "lex.yy.c"
+#line 1108 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2111,8 +2113,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 117 "decaf.l"
-
-
+#line 115 "decaf.l"
 
 

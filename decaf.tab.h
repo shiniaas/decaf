@@ -39,105 +39,105 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     IDENTIFIER = 258,
-     KINT = 259,
-     KBOOL = 260,
-     KSTRING = 261,
-     KVOID = 262,
-     KCLASS = 263,
-     PLBB = 264,
-     PRBB = 265,
-     PCOMMA = 266,
+     INTCONST = 258,
+     BOOLCONST = 259,
+     STRINGCONST = 260,
+     IDENTIFIER = 261,
+     KINT = 262,
+     KBOOL = 263,
+     KSTRING = 264,
+     KVOID = 265,
+     KCLASS = 266,
      KSTATIC = 267,
-     OLB = 268,
-     ORB = 269,
-     KEXTENDS = 270,
-     PLBBB = 271,
-     PRBBB = 272,
-     PSEP = 273,
-     KFOR = 274,
-     KWHILE = 275,
-     KIF = 276,
-     KELSE = 277,
-     KRETURN = 278,
-     KBREAK = 279,
-     KPRINT = 280,
-     KTHIS = 281,
-     OADD = 282,
-     OSUB = 283,
-     OMUL = 284,
-     ODIV = 285,
-     OIDIV = 286,
-     OLT = 287,
-     OLE = 288,
-     OGT = 289,
-     OGE = 290,
-     OEQU = 291,
-     ONE = 292,
-     OAND = 293,
-     OOR = 294,
-     ONOT = 295,
-     KREADINTEGER = 296,
-     KREADLINE = 297,
-     KNEW = 298,
-     KINSTANCEOF = 299,
-     INTCONST = 300,
-     BOOLCONST = 301,
-     STRINGCONST = 302,
-     KNULL = 303,
-     OASSIGN = 304,
+     KEXTENDS = 268,
+     KFOR = 269,
+     KWHILE = 270,
+     KIF = 271,
+     KELSE = 272,
+     KRETURN = 273,
+     KBREAK = 274,
+     KPRINT = 275,
+     KTHIS = 276,
+     KREADINTEGER = 277,
+     KREADLINE = 278,
+     KNEW = 279,
+     KINSTANCEOF = 280,
+     KNULL = 281,
+     OLB = 282,
+     ORB = 283,
+     OADD = 284,
+     OSUB = 285,
+     OMUL = 286,
+     ODIV = 287,
+     OIDIV = 288,
+     OLT = 289,
+     OLE = 290,
+     OGT = 291,
+     OGE = 292,
+     OEQU = 293,
+     ONE = 294,
+     OAND = 295,
+     OOR = 296,
+     ONOT = 297,
+     OASSIGN = 298,
+     PLBB = 299,
+     PRBB = 300,
+     PCOMMA = 301,
+     PLBBB = 302,
+     PRBBB = 303,
+     PSEP = 304,
      PPOINT = 305,
      LOWER_THAN_KELSE = 306
    };
 #endif
 /* Tokens.  */
-#define IDENTIFIER 258
-#define KINT 259
-#define KBOOL 260
-#define KSTRING 261
-#define KVOID 262
-#define KCLASS 263
-#define PLBB 264
-#define PRBB 265
-#define PCOMMA 266
+#define INTCONST 258
+#define BOOLCONST 259
+#define STRINGCONST 260
+#define IDENTIFIER 261
+#define KINT 262
+#define KBOOL 263
+#define KSTRING 264
+#define KVOID 265
+#define KCLASS 266
 #define KSTATIC 267
-#define OLB 268
-#define ORB 269
-#define KEXTENDS 270
-#define PLBBB 271
-#define PRBBB 272
-#define PSEP 273
-#define KFOR 274
-#define KWHILE 275
-#define KIF 276
-#define KELSE 277
-#define KRETURN 278
-#define KBREAK 279
-#define KPRINT 280
-#define KTHIS 281
-#define OADD 282
-#define OSUB 283
-#define OMUL 284
-#define ODIV 285
-#define OIDIV 286
-#define OLT 287
-#define OLE 288
-#define OGT 289
-#define OGE 290
-#define OEQU 291
-#define ONE 292
-#define OAND 293
-#define OOR 294
-#define ONOT 295
-#define KREADINTEGER 296
-#define KREADLINE 297
-#define KNEW 298
-#define KINSTANCEOF 299
-#define INTCONST 300
-#define BOOLCONST 301
-#define STRINGCONST 302
-#define KNULL 303
-#define OASSIGN 304
+#define KEXTENDS 268
+#define KFOR 269
+#define KWHILE 270
+#define KIF 271
+#define KELSE 272
+#define KRETURN 273
+#define KBREAK 274
+#define KPRINT 275
+#define KTHIS 276
+#define KREADINTEGER 277
+#define KREADLINE 278
+#define KNEW 279
+#define KINSTANCEOF 280
+#define KNULL 281
+#define OLB 282
+#define ORB 283
+#define OADD 284
+#define OSUB 285
+#define OMUL 286
+#define ODIV 287
+#define OIDIV 288
+#define OLT 289
+#define OLE 290
+#define OGT 291
+#define OGE 292
+#define OEQU 293
+#define ONE 294
+#define OAND 295
+#define OOR 296
+#define ONOT 297
+#define OASSIGN 298
+#define PLBB 299
+#define PRBB 300
+#define PCOMMA 301
+#define PLBBB 302
+#define PRBBB 303
+#define PSEP 304
 #define PPOINT 305
 #define LOWER_THAN_KELSE 306
 
@@ -145,7 +145,14 @@
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 12 "decaf.y"
+{
+	struct Ast* a;
+}
+/* Line 1529 of yacc.c.  */
+#line 155 "decaf.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
