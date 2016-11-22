@@ -179,7 +179,6 @@
     #ifndef Tree
     	#include "tree.h"
     #endif
-    #define DEBUG
     void yyerror (char const *);
     extern FILE* yyin;
 
@@ -204,12 +203,12 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 12 "decaf.y"
+#line 11 "decaf.y"
 {
 	struct Ast* a;
 }
 /* Line 193 of yacc.c.  */
-#line 213 "decaf.tab.c"
+#line 212 "decaf.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -222,7 +221,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 226 "decaf.tab.c"
+#line 225 "decaf.tab.c"
 
 #ifdef short
 # undef short
@@ -546,15 +545,15 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    39,    39,    42,    43,    46,    49,    52,    53,    54,
-      55,    56,    57,    60,    61,    64,    65,    68,    69,    72,
-      73,    76,    77,    80,    81,    84,    87,    88,    91,    92,
-      93,    94,    95,    96,    97,    98,    99,   102,   103,   104,
-     107,   108,   109,   113,   114,   116,   117,   120,   121,   124,
-     127,   130,   131,   134,   135,   138,   141,   144,   147,   148,
-     149,   150,   151,   152,   153,   154,   155,   156,   157,   158,
-     159,   160,   161,   162,   163,   164,   165,   166,   167,   168,
-     169,   170,   171,   172,   175,   176,   177,   178
+       0,    38,    38,    41,    42,    45,    48,    51,    52,    53,
+      54,    55,    56,    59,    60,    63,    64,    67,    68,    71,
+      72,    75,    76,    79,    80,    83,    86,    87,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,   101,   102,   103,
+     106,   107,   108,   112,   113,   115,   116,   119,   120,   123,
+     126,   129,   130,   133,   134,   137,   140,   143,   146,   147,
+     148,   149,   150,   151,   152,   153,   154,   155,   156,   157,
+     158,   159,   160,   161,   162,   163,   164,   165,   166,   167,
+     168,   169,   170,   171,   174,   175,   176,   177
 };
 #endif
 
@@ -1637,438 +1636,438 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 39 "decaf.y"
-    {(yyval.a)=new_ast("Program", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a)); printf("语法数如下:\n"); print_tree((yyval.a), 0);;}
+#line 38 "decaf.y"
+    {(yyval.a)=new_ast("Program", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a)); printf("语法树如下:\n"); print_tree((yyval.a), 0);;}
     break;
 
   case 3:
-#line 42 "decaf.y"
+#line 41 "decaf.y"
     {(yyval.a)=new_ast("ClassDefList", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 4:
-#line 43 "decaf.y"
+#line 42 "decaf.y"
     {{(yyval.a)=new_ast("ExtClassDefList", 0, -1);};}
     break;
 
   case 5:
-#line 46 "decaf.y"
+#line 45 "decaf.y"
     {(yyval.a)=new_ast("VariableDef", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 6:
-#line 49 "decaf.y"
+#line 48 "decaf.y"
     {(yyval.a)=new_ast("Variable", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 7:
-#line 52 "decaf.y"
+#line 51 "decaf.y"
     {(yyval.a)=new_ast("Type", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 8:
-#line 53 "decaf.y"
+#line 52 "decaf.y"
     {(yyval.a)=new_ast("Type", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 9:
-#line 54 "decaf.y"
+#line 53 "decaf.y"
     {(yyval.a)=new_ast("Type", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 10:
-#line 55 "decaf.y"
+#line 54 "decaf.y"
     {(yyval.a)=new_ast("Type", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 11:
-#line 56 "decaf.y"
+#line 55 "decaf.y"
     {(yyval.a)=new_ast("Type", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 12:
-#line 57 "decaf.y"
+#line 56 "decaf.y"
     {(yyval.a)=new_ast("Type", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 13:
-#line 60 "decaf.y"
+#line 59 "decaf.y"
     {(yyval.a)=new_ast("Formals", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 14:
-#line 61 "decaf.y"
+#line 60 "decaf.y"
     {{(yyval.a)=new_ast("ExtFormals", 0, -1);};}
     break;
 
   case 15:
-#line 64 "decaf.y"
+#line 63 "decaf.y"
     {(yyval.a)=new_ast("VariableList", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 16:
-#line 65 "decaf.y"
+#line 64 "decaf.y"
     {{(yyval.a)=new_ast("ExtVariableList", 0, -1);};}
     break;
 
   case 17:
-#line 68 "decaf.y"
+#line 67 "decaf.y"
     {(yyval.a)=new_ast("FunctionDef", 7, (yyvsp[(1) - (7)].a), (yyvsp[(2) - (7)].a), (yyvsp[(3) - (7)].a), (yyvsp[(4) - (7)].a), (yyvsp[(5) - (7)].a), (yyvsp[(6) - (7)].a), (yyvsp[(7) - (7)].a));;}
     break;
 
   case 18:
-#line 69 "decaf.y"
+#line 68 "decaf.y"
     {(yyval.a)=new_ast("FunctionDef", 6, (yyvsp[(1) - (6)].a), (yyvsp[(2) - (6)].a), (yyvsp[(3) - (6)].a), (yyvsp[(4) - (6)].a), (yyvsp[(5) - (6)].a), (yyvsp[(6) - (6)].a));;}
     break;
 
   case 19:
-#line 72 "decaf.y"
+#line 71 "decaf.y"
     {(yyval.a)=new_ast("ClassDef", 7, (yyvsp[(1) - (7)].a), (yyvsp[(2) - (7)].a), (yyvsp[(3) - (7)].a), (yyvsp[(4) - (7)].a), (yyvsp[(5) - (7)].a), (yyvsp[(6) - (7)].a), (yyvsp[(7) - (7)].a));;}
     break;
 
   case 20:
-#line 73 "decaf.y"
-    {(yyval.a)=new_ast("ClassDef", 6, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
+#line 72 "decaf.y"
+    {(yyval.a)=new_ast("ClassDef", 5, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
     break;
 
   case 21:
-#line 76 "decaf.y"
+#line 75 "decaf.y"
     {(yyval.a)=new_ast("FieldList", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 22:
-#line 77 "decaf.y"
+#line 76 "decaf.y"
     {{(yyval.a)=new_ast("ExtFieldList", 0, -1);};}
     break;
 
   case 23:
-#line 80 "decaf.y"
+#line 79 "decaf.y"
     {(yyval.a)=new_ast("Field", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 24:
-#line 81 "decaf.y"
+#line 80 "decaf.y"
     {(yyval.a)=new_ast("Field", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 25:
-#line 84 "decaf.y"
+#line 83 "decaf.y"
     {(yyval.a)=new_ast("StmtBlock", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 26:
-#line 87 "decaf.y"
+#line 86 "decaf.y"
     {(yyval.a)=new_ast("StmtList", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 27:
-#line 88 "decaf.y"
+#line 87 "decaf.y"
     {{(yyval.a)=new_ast("ExtStmtList", 0, -1);};}
     break;
 
   case 28:
-#line 91 "decaf.y"
+#line 90 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 29:
-#line 92 "decaf.y"
+#line 91 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 30:
-#line 93 "decaf.y"
+#line 92 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 31:
-#line 94 "decaf.y"
+#line 93 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 32:
-#line 95 "decaf.y"
+#line 94 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 33:
-#line 96 "decaf.y"
+#line 95 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 34:
-#line 97 "decaf.y"
+#line 96 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 35:
-#line 98 "decaf.y"
+#line 97 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 36:
-#line 99 "decaf.y"
+#line 98 "decaf.y"
     {(yyval.a)=new_ast("Stmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 37:
-#line 102 "decaf.y"
+#line 101 "decaf.y"
     {(yyval.a)=new_ast("SimpleStmt", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 38:
-#line 103 "decaf.y"
+#line 102 "decaf.y"
     {(yyval.a)=new_ast("SimpleStmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 39:
-#line 104 "decaf.y"
+#line 103 "decaf.y"
     {{(yyval.a)=new_ast("ExtSimpleStmt", 0, -1);};}
     break;
 
   case 40:
-#line 107 "decaf.y"
+#line 106 "decaf.y"
     {(yyval.a)=new_ast("LValue", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 41:
-#line 108 "decaf.y"
+#line 107 "decaf.y"
     {(yyval.a)=new_ast("LValue", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 42:
-#line 109 "decaf.y"
+#line 108 "decaf.y"
     {(yyval.a)=new_ast("LValue", 4, (yyvsp[(1) - (4)].a), (yyvsp[(2) - (4)].a), (yyvsp[(3) - (4)].a), (yyvsp[(4) - (4)].a));;}
     break;
 
   case 43:
-#line 113 "decaf.y"
+#line 112 "decaf.y"
     {(yyval.a)=new_ast("Call", 6, (yyvsp[(1) - (6)].a), (yyvsp[(2) - (6)].a), (yyvsp[(3) - (6)].a), (yyvsp[(4) - (6)].a), (yyvsp[(5) - (6)].a), (yyvsp[(6) - (6)].a));;}
     break;
 
   case 44:
-#line 114 "decaf.y"
+#line 113 "decaf.y"
     {(yyval.a)=new_ast("Call", 4, (yyvsp[(1) - (4)].a), (yyvsp[(2) - (4)].a), (yyvsp[(3) - (4)].a), (yyvsp[(4) - (4)].a));;}
     break;
 
   case 45:
-#line 116 "decaf.y"
+#line 115 "decaf.y"
     {(yyval.a)=new_ast("Actuals", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 46:
-#line 117 "decaf.y"
+#line 116 "decaf.y"
     {{(yyval.a)=new_ast("ExtActuals", 0, -1);};}
     break;
 
   case 47:
-#line 120 "decaf.y"
+#line 119 "decaf.y"
     {(yyval.a)=new_ast("ExprList", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 48:
-#line 121 "decaf.y"
+#line 120 "decaf.y"
     {{(yyval.a)=new_ast("ExtExprList", 0, -1);};}
     break;
 
   case 49:
-#line 124 "decaf.y"
+#line 123 "decaf.y"
     {(yyval.a)=new_ast("ForStmt", 9, (yyvsp[(1) - (9)].a), (yyvsp[(2) - (9)].a), (yyvsp[(3) - (9)].a), (yyvsp[(4) - (9)].a), (yyvsp[(5) - (9)].a), (yyvsp[(6) - (9)].a), (yyvsp[(7) - (9)].a), (yyvsp[(8) - (9)].a), (yyvsp[(9) - (9)].a));;}
     break;
 
   case 50:
-#line 127 "decaf.y"
+#line 126 "decaf.y"
     {(yyval.a)=new_ast("WhileStmt", 5, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
     break;
 
   case 51:
-#line 130 "decaf.y"
+#line 129 "decaf.y"
     {(yyval.a)=new_ast("IfStmt", 7, (yyvsp[(1) - (7)].a), (yyvsp[(2) - (7)].a), (yyvsp[(3) - (7)].a), (yyvsp[(4) - (7)].a), (yyvsp[(5) - (7)].a), (yyvsp[(6) - (7)].a), (yyvsp[(7) - (7)].a));;}
     break;
 
   case 52:
-#line 131 "decaf.y"
+#line 130 "decaf.y"
     {(yyval.a)=new_ast("IfStmt", 5, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
     break;
 
   case 53:
-#line 134 "decaf.y"
+#line 133 "decaf.y"
     {(yyval.a)=new_ast("ReturnStmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 54:
-#line 135 "decaf.y"
+#line 134 "decaf.y"
     {(yyval.a)=new_ast("ReturnStmt", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 55:
-#line 138 "decaf.y"
+#line 137 "decaf.y"
     {(yyval.a)=new_ast("BreakStmt", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 56:
-#line 141 "decaf.y"
+#line 140 "decaf.y"
     {(yyval.a)=new_ast("PrintStmt", 5, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
     break;
 
   case 57:
-#line 144 "decaf.y"
+#line 143 "decaf.y"
     {(yyval.a)=new_ast("BoolExpr", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 58:
-#line 147 "decaf.y"
+#line 146 "decaf.y"
     {(yyval.a)=new_ast("Expr", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 59:
-#line 148 "decaf.y"
+#line 147 "decaf.y"
     {(yyval.a)=new_ast("Expr", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 60:
-#line 149 "decaf.y"
+#line 148 "decaf.y"
     {(yyval.a)=new_ast("Expr", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 61:
-#line 150 "decaf.y"
+#line 149 "decaf.y"
     {(yyval.a)=new_ast("Expr", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 62:
-#line 151 "decaf.y"
+#line 150 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 63:
-#line 152 "decaf.y"
+#line 151 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 64:
-#line 153 "decaf.y"
+#line 152 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 65:
-#line 154 "decaf.y"
+#line 153 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 66:
-#line 155 "decaf.y"
+#line 154 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 67:
-#line 156 "decaf.y"
+#line 155 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 68:
-#line 157 "decaf.y"
+#line 156 "decaf.y"
     {(yyval.a)=new_ast("Expr", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 69:
-#line 158 "decaf.y"
+#line 157 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 70:
-#line 159 "decaf.y"
+#line 158 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 71:
-#line 160 "decaf.y"
+#line 159 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 72:
-#line 161 "decaf.y"
+#line 160 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 73:
-#line 162 "decaf.y"
+#line 161 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 74:
-#line 163 "decaf.y"
+#line 162 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 75:
-#line 164 "decaf.y"
+#line 163 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 76:
-#line 165 "decaf.y"
+#line 164 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 77:
-#line 166 "decaf.y"
+#line 165 "decaf.y"
     {(yyval.a)=new_ast("Expr", 2, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));;}
     break;
 
   case 78:
-#line 167 "decaf.y"
+#line 166 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 79:
-#line 168 "decaf.y"
+#line 167 "decaf.y"
     {(yyval.a)=new_ast("Expr", 3, (yyvsp[(1) - (3)].a), (yyvsp[(2) - (3)].a), (yyvsp[(3) - (3)].a));;}
     break;
 
   case 80:
-#line 169 "decaf.y"
+#line 168 "decaf.y"
     {(yyval.a)=new_ast("Expr", 4, (yyvsp[(1) - (4)].a), (yyvsp[(2) - (4)].a), (yyvsp[(3) - (4)].a), (yyvsp[(4) - (4)].a));;}
     break;
 
   case 81:
-#line 170 "decaf.y"
+#line 169 "decaf.y"
     {(yyval.a)=new_ast("Expr", 5, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
     break;
 
   case 82:
-#line 171 "decaf.y"
+#line 170 "decaf.y"
     {(yyval.a)=new_ast("Expr", 6, (yyvsp[(1) - (6)].a), (yyvsp[(2) - (6)].a), (yyvsp[(3) - (6)].a), (yyvsp[(4) - (6)].a), (yyvsp[(5) - (6)].a), (yyvsp[(6) - (6)].a));;}
     break;
 
   case 83:
-#line 172 "decaf.y"
+#line 171 "decaf.y"
     {(yyval.a)=new_ast("Expr", 5, (yyvsp[(1) - (5)].a), (yyvsp[(2) - (5)].a), (yyvsp[(3) - (5)].a), (yyvsp[(4) - (5)].a), (yyvsp[(5) - (5)].a));;}
     break;
 
   case 84:
-#line 175 "decaf.y"
+#line 174 "decaf.y"
     {(yyval.a)=new_ast("Constant", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 85:
-#line 176 "decaf.y"
+#line 175 "decaf.y"
     {(yyval.a)=new_ast("Constant", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 86:
-#line 177 "decaf.y"
+#line 176 "decaf.y"
     {(yyval.a)=new_ast("Constant", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
   case 87:
-#line 178 "decaf.y"
+#line 177 "decaf.y"
     {(yyval.a)=new_ast("Constant", 1, (yyvsp[(1) - (1)].a));;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2072 "decaf.tab.c"
+#line 2071 "decaf.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2282,7 +2281,7 @@ yyreturn:
 }
 
 
-#line 181 "decaf.y"
+#line 180 "decaf.y"
 
 
 int main(int argc, char **argv)
@@ -2297,7 +2296,7 @@ int main(int argc, char **argv)
 		perror(argv[1]);
 		return 1;
 	}
-	yydebug = 1;
+	//yydebug = 1;
 	yyrestart(f);
 	yyparse();
     return 0;

@@ -31,8 +31,8 @@ LETTER [a-zA-Z]
 IDENTIFIER {LETTER}[_0-9a-zA-Z]*
 SPACE [ \t\n]
 BOOLCONST true|false
-INTCONSTDEC [+-]?{DIGIT}+
-INTCONSTHEX [+-]?0[Xx]([0-9a-fA-F])+
+INTCONSTDEC {DIGIT}+
+INTCONSTHEX 0[Xx]([0-9a-fA-F])+
 INTCONST {INTCONSTDEC}|{INTCONSTHEX}
 STRINGCONST \"[^(\n\")]*\"
 OPERATOR \+|\-|\*|\/|\%|\<|\<\=|\>|\>\=|\=|\=\=|\!\=|\&\&|\|\||\!|\(|\)
@@ -69,7 +69,7 @@ COMMENT \/\/.*
 {KCLASS} {yylval.a = new_ast("KCLASS", 0, yylineno);return KCLASS;}
 {KELSE} {yylval.a = new_ast("KELSE", 0, yylineno);return KELSE;}
 {KEXTENDS} {yylval.a = new_ast("KEXTENDS", 0, yylineno);return KEXTENDS;}
-{KFOR} {yylval.a = new_ast("KFOR'", 0, yylineno);return KFOR;}
+{KFOR} {yylval.a = new_ast("KFOR", 0, yylineno);return KFOR;}
 {KIF} {yylval.a = new_ast("KIF", 0, yylineno);return KIF;}
 {KINT} {yylval.a = new_ast("TYPE", 0, yylineno);return KINT;}
 {KNEW} {yylval.a = new_ast("KNEW", 0, yylineno);return KNEW;}
@@ -83,10 +83,6 @@ COMMENT \/\/.*
 {KPRINT} {yylval.a = new_ast("KPRINT", 0, yylineno);return KPRINT;}
 {KREADINTEGER} {yylval.a = new_ast("KREADINTEGER", 0, yylineno);return KREADINTEGER;}
 {KINSTANCEOF} {yylval.a = new_ast("KINSTANCEOF", 0, yylineno);return KINSTANCEOF;}
-{BOOLCONST} {yylval.a = new_ast("BOOLCONST", 0, yylineno);return BOOLCONST;}
-{IDENTIFIER} {yylval.a = new_ast("IDENTIFIER", 0, yylineno);return IDENTIFIER;}
-{INTCONST} {yylval.a = new_ast("INTCONST", 0, yylineno);return INTCONST;}
-{STRINGCONST} {yylval.a = new_ast("STRINGCONST", 0, yylineno);return STRINGCONST;}
 {OADD} {yylval.a = new_ast("OADD", 0, yylineno);return OADD;}
 {OSUB} {yylval.a = new_ast("OSUB", 0, yylineno);return OSUB;}
 {OMUL} {yylval.a = new_ast("OMUL", 0, yylineno);return OMUL;}
@@ -104,6 +100,10 @@ COMMENT \/\/.*
 {ONOT} {yylval.a = new_ast("ONOT", 0, yylineno);return ONOT;}
 {OLB} {yylval.a = new_ast("OLB", 0, yylineno);return OLB;}
 {ORB} {yylval.a = new_ast("ORB", 0, yylineno);return ORB;}
+{BOOLCONST} {yylval.a = new_ast("BOOLCONST", 0, yylineno);return BOOLCONST;}
+{IDENTIFIER} {yylval.a = new_ast("IDENTIFIER", 0, yylineno);return IDENTIFIER;}
+{INTCONST} {yylval.a = new_ast("INTCONST", 0, yylineno);return INTCONST;}
+{STRINGCONST} {yylval.a = new_ast("STRINGCONST", 0, yylineno);return STRINGCONST;}
 {PPOINT} {yylval.a = new_ast("PPOINT", 0, yylineno);return PPOINT;}
 {PSEP} {yylval.a = new_ast("PSEP", 0, yylineno);return PSEP;}
 {PCOMMA} {yylval.a = new_ast("PCOMMA", 0, yylineno);return PCOMMA;}

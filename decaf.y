@@ -4,7 +4,6 @@
     #ifndef Tree
     	#include "tree.h"
     #endif
-    #define DEBUG
     void yyerror (char const *);
     extern FILE* yyin;
 %}
@@ -36,7 +35,7 @@
 %start Program
 %%
 Program : 
-		ClassDef ClassDefList {$$=new_ast("Program", 2, $1, $2); printf("语法数如下:\n"); print_tree($$, 0);}
+		ClassDef ClassDefList {$$=new_ast("Program", 2, $1, $2); printf("语法树如下:\n"); print_tree($$, 0);}
         ;
 ClassDefList : 
 		ClassDef ClassDefList {$$=new_ast("ClassDefList", 2, $1, $2);}
@@ -70,7 +69,7 @@ FunctionDef :
 		;
 ClassDef :
 		KCLASS IDENTIFIER KEXTENDS IDENTIFIER PLBBB FieldList PRBBB {$$=new_ast("ClassDef", 7, $1, $2, $3, $4, $5, $6, $7);}
-		|KCLASS IDENTIFIER PLBBB FieldList PRBBB {$$=new_ast("ClassDef", 6, $1, $2, $3, $4, $5);}
+		|KCLASS IDENTIFIER PLBBB FieldList PRBBB {$$=new_ast("ClassDef", 5, $1, $2, $3, $4, $5);}
 		;
 FieldList :
 		Field FieldList {$$=new_ast("FieldList", 2, $1, $2);}
@@ -192,7 +191,7 @@ int main(int argc, char **argv)
 		perror(argv[1]);
 		return 1;
 	}
-	yydebug = 1;
+	//yydebug = 1;
 	yyrestart(f);
 	yyparse();
     return 0;

@@ -146,7 +146,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 12 "decaf.y"
+#line 11 "decaf.y"
 {
 	struct Ast* a;
 }

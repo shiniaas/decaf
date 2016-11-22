@@ -65,7 +65,7 @@ void print_tree(ast* node, int level)
         {
             printf("  ");
         }
-        if(node->line != -1) //产生空的语法单元不打印信息
+        if(node->line != -1)
         {
             printf("%s ", node->name);
             if((strcmp(node->name, "IDENTIFIER") == 0) || (strcmp(node->name, "TYPE") == 0) || (strcmp(node->name, "STRINGCONST") == 0))
@@ -82,6 +82,10 @@ void print_tree(ast* node, int level)
             }
             else
                 printf("(%d)", node->line);
+        }
+        else
+        {
+            printf("%s", node->name);
         }
         printf("\n");
         print_tree(node->pleft, level+1);
