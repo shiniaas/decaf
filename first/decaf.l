@@ -28,8 +28,8 @@ LETTER [a-zA-Z]
 IDENTIFIER {LETTER}[_0-9a-zA-Z]*
 SPACE [ \t\n]
 BOOLCONST true|false
-INTCONSTDEC [+-]?{DIGIT}+
-INTCONSTHEX [+-]?0[Xx]([0-9a-fA-F])+
+INTCONSTDEC {DIGIT}+
+INTCONSTHEX 0[Xx]([0-9a-fA-F])+
 INTCONST {INTCONSTDEC}|{INTCONSTHEX}
 STRINGCONST \"[^(\n\")]*\"
 OPERATOR \+|\-|\*|\/|\%|\<|\<\=|\>|\>\=|\=|\=\=|\!\=|\&\&|\|\||\!|\(|\)
@@ -60,6 +60,8 @@ PLBBB \{
 PRBBB \}
 COMMENT \/\/.*
 
+%s    AMOP
+
 %%
 {KBOOL} {printf("keyword %s\n", yytext);}
 {KBREAK} {printf("keyword %s\n", yytext);}
@@ -80,11 +82,6 @@ COMMENT \/\/.*
 {KPRINT} {printf("keyword %s\n", yytext);}
 {KREADINTEGER} {printf("keyword %s\n", yytext);}
 {KINSTANCEOF} {printf("keyword %s\n", yytext);}
-{BOOLCONST} {printf("boolconst %s\n", yytext);}
-{IDENTIFIER} {printf("identifier %s\n", yytext);}
-{INTCONSTDEC} {printf("intconstdec %s\n", yytext);}
-{INTCONSTHEX} {printf("intconsthex %s\n", yytext);}
-{STRINGCONST} {printf("stringconst %s\n", yytext);}
 {OADD} {printf("operator %s\n", yytext);}
 {OSUB} {printf("operator %s\n", yytext);}
 {OMUL} {printf("operator %s\n", yytext);}
@@ -102,6 +99,10 @@ COMMENT \/\/.*
 {ONOT} {printf("operator %s\n", yytext);}
 {OLB} {printf("operator %s\n", yytext);}
 {ORB} {printf("operator %s\n", yytext);}
+{BOOLCONST} {printf("boolconst %s\n", yytext);}
+{IDENTIFIER} {printf("identifier %s\n", yytext);}
+{INTCONST} {printf("intconst %s\n", yytext);}
+{STRINGCONST} {printf("stringconst %s\n", yytext);}
 {PPOINT} {printf("punctuation %s\n", yytext);}
 {PSEP} {printf("punctuation %s\n", yytext);}
 {PCOMMA} {printf("punctuation %s\n", yytext);}
