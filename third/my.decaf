@@ -4,9 +4,9 @@ class a
 	int b;
 	bool c;
 	int i;
-	int init()
+	int init(int y, int z)
 	{
-		return 1;//aksdjlfl;kasd
+		return 1;
 	}
 	int test()
 	{
@@ -28,3 +28,11 @@ class a
 		}
 	}
 }	
+class b
+{
+	
+}
+class c
+{
+	
+}

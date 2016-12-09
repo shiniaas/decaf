@@ -1,10 +1,10 @@
 #include "tree.h"
 
-ast* new_ast(char* name, int num, ...)
+Ast* new_ast(char* name, int num, ...)
 {
     va_list valist; //变长参数列表
-    ast* phead = (ast*)malloc(sizeof(ast));
-    ast* ptemp = NULL;
+    Ast* phead = (Ast*)malloc(sizeof(Ast));
+    Ast* ptemp = NULL;
     if(!phead)
     {
         printf("malloc error");
@@ -16,7 +16,7 @@ ast* new_ast(char* name, int num, ...)
     va_start(valist, num);
     if(num > 0) //非终结符：变长参数为语法树结点，孩子兄弟表示法
     {
-        ptemp = va_arg(valist, ast*);
+        ptemp = va_arg(valist, Ast*);
         phead->pleft = ptemp;
         phead->line = ptemp->line; //父亲节点的行号等于左孩子的行号
         
@@ -24,7 +24,7 @@ ast* new_ast(char* name, int num, ...)
         {
             for(int i = 0; i < num-1 ; ++i)
             {
-                ptemp->pright = va_arg(valist, ast*);
+                ptemp->pright = va_arg(valist, Ast*);
                 ptemp = ptemp->pright;
             }
         }
@@ -57,7 +57,7 @@ ast* new_ast(char* name, int num, ...)
     return phead;
 }
 
-void print_tree(ast* node, int level)
+void print_tree(Ast* node, int level)
 {
     if(node != NULL)
     {

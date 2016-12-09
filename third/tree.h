@@ -25,3 +25,4 @@ typedef struct Ast
 /* num:变长参数中语法节点的个数 */
 Ast* new_ast(char *name, int num, ...);
 void print_tree(Ast* node, int level);
+void print_symtable();
