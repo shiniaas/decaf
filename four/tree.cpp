@@ -1,4 +1,6 @@
 #include "tree.h"
+#include "symtable.h"
+//全局树的建立
 
 ast* new_ast(char* name, int num, ...)
 {
@@ -39,15 +41,15 @@ ast* new_ast(char* name, int num, ...)
             strcpy(str,yytext);
             phead->str=str;
         }
-        else if(strcmp(phead->name, "int") == 0)
+        else if(strcmp(phead->name, "INTCONST") == 0)
         {
             phead->intgr = atoi(yytext);
         }
-        else if(strcmp(phead->name, "bool") == 0)
+        else if(strcmp(phead->name, "BOOLCONST") == 0)
         {
             phead->bl = strcmp(yytext, "true")==0?true:false;
         }
-        else if(strcmp(phead->name, "string") == 0)
+        else if(strcmp(phead->name, "STRINGCONST") == 0)
         {
             char *str=(char*)malloc(strlen(yytext)+1);
             strcpy(str,yytext);
@@ -68,15 +70,15 @@ void print_tree(ast* node, int level)
         if(node->line != -1)
         {
             printf("%s ", node->name);
-            if((strcmp(node->name, "IDENTIFIER") == 0) || (strcmp(node->name, "TYPE") == 0) || (strcmp(node->name, "string") == 0))
+            if((strcmp(node->name, "IDENTIFIER") == 0) || (strcmp(node->name, "TYPE") == 0) || (strcmp(node->name, "STRINGCONST") == 0))
             {
                 printf(":%s ", node->str);
             }
-            else if(strcmp(node->name, "int") == 0)
+            else if(strcmp(node->name, "INTCONST") == 0)
             {
                 printf(":%d", node->intgr);
             }
-            else if(strcmp(node->name, "bool") == 0)
+            else if(strcmp(node->name, "BOOLCONST") == 0)
             {
                 printf(":%d", node->bl);
             }

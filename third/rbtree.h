@@ -1,20 +1,27 @@
 #include <iostream>
 #include <stack>
 #include <cstdlib>
+#include <vector>
 #define INF 0x7FFFFFFF
 using namespace std;
 
 enum COLOR {RED, BLACK};
+enum OBJECT {VARIABLE, PARAMETER, LOCAL, FUNCTION, CLASS};
 
 struct TreeNode {
-    int key;
+    string name;
+    OBJECT type;
+    int level;
     TreeNode *parent;
     TreeNode *left, *right;
     COLOR color;
     
     TreeNode& operator = (TreeNode& node)  //Reload the "=" for assignment
     {
-        this->key = node.key;
+        
+        this->name = node.name;
+        this->type = node.type;
+        this->level = node.level;
         this->parent = node.parent;
         this->left = node.left;
         this->right = node.right;
@@ -23,7 +30,10 @@ struct TreeNode {
     }
 };
 
-TreeNode NULL_NODE = {INF,nullptr,nullptr,nullptr,BLACK};
+TreeNode NULL_NODE = {"0",VARIABLE,0,nullptr,nullptr,nullptr,BLACK};
+int level = 0;
+//stack<TreeNode *> treetable;
+vector<TreeNode *> tree;
 
 class Red_Black_Tree
 {
@@ -48,16 +58,13 @@ private:
 public:
     Red_Black_Tree() { _size = 0; NIL = &NULL_NODE; root = &NULL_NODE;}
     
-    void RBTree_Insert(int _key);
-    bool RBTree_Delete(int _key);
+    void RBTree_Insert(string _name, OBJECT _type, int _level);
+    bool RBTree_Delete(string _name);
     
     void Preorder_Traversal();
-    TreeNode * Find(int _key);
+    TreeNode * Find(string _name);
 };
-/**
- * Left rotate the subtree
- * @param x : The root of the subtree to be rotated
- */
+
 void Red_Black_Tree::Left_Rotate(TreeNode *x)
 {
     if(x->right == NIL)
@@ -89,11 +96,7 @@ void Red_Black_Tree::Left_Rotate(TreeNode *x)
     y->left = x;    //Put x on y's left
     x->parent = y;
 }
-/**
- * Right rotate the subtree
- * Symmetry with the function "Left Rotate" above.
- * @param x : The root of the subtree to be rotated
- */
+
 void Red_Black_Tree::Right_Rotate(TreeNode *y)
 {
     if(y->left == NIL)
@@ -125,9 +128,7 @@ void Red_Black_Tree::Right_Rotate(TreeNode *y)
     x->right = y;
     y->parent = x;
 }
-/**
- * Transplant the subtree u with the subtree v
- */
+
 void Red_Black_Tree::Transplant(TreeNode * u, TreeNode * v)
 {
     if(u->parent == NIL)
@@ -145,18 +146,14 @@ void Red_Black_Tree::Transplant(TreeNode * u, TreeNode * v)
     
     v->parent = u->parent;
 }
-/**
- * Find a node whose key value equals to "_key"
- * @param  _key : The key value
- * @return      : If the node exists, return the node. Else, return the NULL_NODE.
- */
-TreeNode * Red_Black_Tree::Find(/*TreeNode * root,*/ int _key)  //The circulation version of Search
+
+TreeNode * Red_Black_Tree::Find(/*TreeNode * root,*/ string _name)  //The circulation version of Search
 {
     TreeNode * p = root;
     
-    while(p != NIL && p->key!=_key)
+    while(p != NIL && p->name!=_name)
     {
-        if(p->key > _key)
+        if(p->name > _name)
             p = p->left;
         else
             p = p->right;
@@ -199,7 +196,8 @@ void Red_Black_Tree::Preorder_Traversal(/*TreeNode * root */)   //The circulatio
         while(p!=NIL)
         {
             TreeNode_Stack.push(p);
-            cout<<p->key<<" ";
+            cout<<p->name<<" ";
+            cout<<p->type<<" ";
             if(p->color==BLACK)
                 cout<<"BLACK ";
             else
@@ -215,10 +213,13 @@ void Red_Black_Tree::Preorder_Traversal(/*TreeNode * root */)   //The circulatio
     }
     cout<<endl;
 }
-void Red_Black_Tree::RBTree_Insert(int _key)
+
+void Red_Black_Tree::RBTree_Insert(string _name, OBJECT _type, int _level)
 {
     TreeNode * z = new TreeNode;
-    z->key = _key;
+    z->name = _name;
+    z->type = _type;
+    z->level = _level;
     z->color = RED;
     z->left = z->right = NIL;
     
@@ -228,7 +229,7 @@ void Red_Black_Tree::RBTree_Insert(int _key)
     while(x != NIL)
     {
         y = x;
-        if(_key < x->key)
+        if(_name < x->name)
             x = x->left;
         else
             x = x->right;
@@ -239,7 +240,7 @@ void Red_Black_Tree::RBTree_Insert(int _key)
     {
         root = z;
     }
-    else if(z->key < y->key)
+    else if(z->name < y->name)
     {
         y->left = z;
     }
@@ -250,10 +251,7 @@ void Red_Black_Tree::RBTree_Insert(int _key)
     
     RB_Insert_FixUp(z);
 }
-/**
- * Fix the double-red bug in this tree
- * @param z : a node which was just inserted
- */
+
 void Red_Black_Tree::RB_Insert_FixUp(TreeNode *z)
 {
     while(z->parent->color == RED)
@@ -305,17 +303,13 @@ void Red_Black_Tree::RB_Insert_FixUp(TreeNode *z)
     }
     root->color = BLACK;
 }
-/**
- * Delete a node from the RB-Tree
- * @param  _key : The key value of the node which is to deleted
- * @return      : True for succeed, and false for no such node existed.
- */
-bool Red_Black_Tree::RBTree_Delete(int _key)
+
+bool Red_Black_Tree::RBTree_Delete(string _name)
 {
-    TreeNode *z = Find(_key);
+    TreeNode *z = Find(_name);
     if(z == NIL)
     {
-        cout<<"Error : No node valued "<<_key<<" !"<<endl;
+        cout<<"Error : No node valued "<<_name<<" !"<<endl;
         return false;
     }
     
@@ -360,10 +354,7 @@ bool Red_Black_Tree::RBTree_Delete(int _key)
     delete z;
     return true;
 }
-/**
- * Delete a node may cause Black-Height changed, and this function is to fix this bug.
- * @param x : The place where the substitude node used to be
- */
+
 void Red_Black_Tree::RB_Delete_FixUp(TreeNode *x)
 {
     while(x!=root && x->color == BLACK)

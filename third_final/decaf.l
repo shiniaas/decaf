@@ -1,9 +1,7 @@
 
 %{
     #include "decaf.tab.h"
-    #ifndef Tree
-    	#include "tree.h"
-    #endif
+    #include "tree.h"
 %}
 %option yylineno
 KEYWORD bool|break|class|else|extends|for|if|int|new|null|return|string|this|void|while|static|Print|ReadInteger|instanceof
@@ -115,4 +113,5 @@ COMMENT \/\/.*
 {COMMENT} {;}
 . {printf("Error type at line %d:Mysterious characters \'%s\'\n",yylineno, yytext);}
 %%
+
 

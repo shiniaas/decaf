@@ -1,0 +1,25 @@
+class a
+{
+	string sa;
+	int ic;
+	bool bc;
+	int i;
+	int init(int y, int z)
+	{
+		int k;
+		init(1, 2);
+		ic = (1+2)*3+1;
+		return 1;
+	}
+}	
+class b extends a
+{
+	int op;
+	string st;
+	int test()
+	{
+		class a p;
+		op = p.init(1, 4) + op;
+		//p.start();
+	}
+}

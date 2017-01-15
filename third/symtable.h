@@ -18,6 +18,8 @@ typedef struct spara
 typedef struct slocal
 {
     svar* psvar;
+    vector<struct slocal*> equallocal; //和当前local平级的local
+    struct slocal* deeplocal; //比当前local更深的local
 }slocal;
 
 /*函数符号表的结点*/
@@ -27,7 +29,7 @@ typedef struct sfunc
     char* rtype;
     spara* pspara;
     svar* psvar;
-    slocal* pslocal;
+    vector<slocal*> vlocal;
     struct sfunc* next;
 }sfunc;
 
@@ -87,3 +89,62 @@ svar* Getpara_tail(spara* p)
     }
     return ptemp;
 }
+
+svar* Getfuncvar_tail(svar* p)
+{
+    if(p == NULL)
+    {
+        return NULL;
+    }
+    while(p->next != NULL)
+    {
+        p = p->next;
+    }
+    return p;
+}
+
+svar* Getlocalvar_tail(slocal* p)
+{
+    svar* ptemp = p->psvar;
+    if(ptemp == NULL)
+    {
+        return NULL;
+    }
+    while(ptemp->next != NULL)
+    {
+        ptemp = ptemp->next;
+    }
+    return ptemp;
+}
+
+svar* Getclassvar_tail(svar *p)
+{
+    if(p == NULL)
+    {
+        return NULL;
+    }
+    while(p->next != NULL)
+    {
+        p = p->next;
+    }
+    return p;
+}
+
+slocal* Getlocal_tail(slocal* p)
+{
+    while(p->next != NULL)
+    {
+        p = p->next;
+    }
+    return p;
+}
+
+slocal* Getcurlocal(slocal* p)
+{
+    while(p->deeplocal != NULL)
+    {
+        p = p->deeplocal;
+    }
+    return p;
+}
+

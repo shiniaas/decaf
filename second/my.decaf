@@ -1,30 +1,27 @@
-class a
+class Computer
 {
-	string a;
-	int b;
-	bool c;
+	int ic;
 	int i;
-	int init()
+	int abs(int x)
 	{
-		return 1;//aksdjlfl;kasd
-	}
-	int test()
-	{
-		for(i=5;i>1;i=i-1)
+		for(i=0;i<5;i=i+1)
 		{
-			;
-		}	
-		while(i<10)
-		{
-			i = i+1;
+			x = x+1;
 		}
-		if(i == 1)
-		{
-			b = 1;
-		}	
-		else
-		{
-			b = 2;
-		}
+        return 1;
+		return x;
+		return;
 	}
 }	
+class Mac extends Computer
+{
+	int op;
+	int test()
+	{
+		class Computer linux;
+		int i;
+		i = linux.ic + op + i + 1+linux.abs(1) + test(1, 2);
+
+        linux.abs(i);
+	}
+}

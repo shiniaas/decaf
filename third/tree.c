@@ -4,8 +4,7 @@
 sglob sGlobal = {NULL};
 sclass* pcurclass = NULL;
 sfunc* pcurfunc = NULL;
-int flagfunc = 0;
-int flaglocal = 0;
+slocal* pcurlocal = NULL;
 
 int curscope = 0; //0:global, 1:class, 2:func, >=3:local
 int infunc = 0; //表明是否是在函数的参数表内
@@ -75,6 +74,25 @@ void print_tree(Ast* node, int level)
             if(strcmp(node->name, "PLBBB") == 0)
             {
                 curscope = curscope+1;
+                if(curscope == 3)
+                {
+                    pcurlocal = (slocal*)malloc(sizeof(slocal));
+                    pcurlocal->psvar = NULL;
+                    pcurlocal->equallocal.clear();
+                    pcurlocal->deeplocal = NULL;
+                    pcurfunc->vlocal.push_back(pcurlocal);
+                    
+                }
+                if(curscope > 3)
+                {
+                    pcurlocal = pcurfunc->vlocal[pcurfunc->vlocal.size()-1];
+                    
+                    pcurlocal = Getcurlocal(pcurfunc->pslocal);
+                    pcurlocal->deeplocal = (slocal*)malloc(sizeof(slocal));
+                    pcurlocal->deeplocal->psvar = NULL;
+                    pcurlocal->deeplocal->next = NULL;
+                    pcurlocal->next = NULL;
+                }
             }
             else if(strcmp(node->name, "PRBBB") == 0)
             {
@@ -128,8 +146,10 @@ void print_tree(Ast* node, int level)
                     pcurclass->psfunc->pspara = (spara*)malloc(sizeof(spara));
                     pcurclass->psfunc->pspara->psvar = NULL;
                     pcurclass->psfunc->psvar = NULL;
-                    pcurclass->psfunc->pslocal = (slocal*)malloc(sizeof(slocal));
-                    pcurclass->psfunc->pslocal->psvar = NULL;
+                    pcurclass->psfunc->vlocal.clear();//(slocal*)malloc(sizeof(slocal));
+//                    pcurclass->psfunc->pslocal->psvar = NULL;
+//                    pcurclass->psfunc->pslocal->equallocal.clear();
+//                    pcurclass->psfunc->pslocal->deeplocal = NULL;
                     pcurclass->psfunc->next = NULL;
                 }
                 else
@@ -152,8 +172,10 @@ void print_tree(Ast* node, int level)
                     psf->next->pspara = (spara*)malloc(sizeof(spara));
                     psf->next->pspara->psvar = NULL;
                     psf->next->psvar = NULL;
-                    psf->next->pslocal = (slocal*)malloc(sizeof(slocal));
-                    psf->next->pslocal->psvar = NULL;
+                    psf->next->vlocal.clear();//(slocal*)malloc(sizeof(slocal));
+//                    psf->next->pslocal->psvar = NULL;
+//                    psf->next->pslocal->equallocal.clear();
+//                    psf->next->pslocal->deeplocal = NULL;
                     psf->next->next = NULL;
                 }
                 pcurfunc = Getfunc_tail(pcurclass);
@@ -161,11 +183,12 @@ void print_tree(Ast* node, int level)
             else if(infunc == 1 && strcmp(node->name, "ORB") == 0)
             {
                 infunc = 0; //参数声明结束
+                
             }
             else if(strcmp(node->name, "Variable") == 0)
             {
                 svar* psv = NULL;
-                if(infunc == 1)
+                if(infunc == 1) //func内的para
                 {
                     psv = Getpara_tail(pcurfunc->pspara);
                     if(psv == NULL)
@@ -176,6 +199,96 @@ void print_tree(Ast* node, int level)
                         pcurfunc->pspara->psvar->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
                         strcpy(pcurfunc->pspara->psvar->name, node->pleft->pright->str);
                         pcurfunc->pspara->psvar->next = NULL;
+                    }
+                    else
+                    {
+                        psv->next = (svar*)malloc(sizeof(svar));
+                        psv->next->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(psv->next->type, node->pleft->pleft->str);
+                        psv->next->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(psv->next->name, node->pleft->pright->str);
+                        psv->next->next = NULL;
+                    }
+                }
+                else if(curscope == 1)  //classs内的var
+                {
+                    psv = Getclassvar_tail(pcurclass->psvar);
+                    if(psv == NULL)
+                    {
+                        pcurclass->psvar = (svar*)malloc(sizeof(svar));
+                        pcurclass->psvar->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(pcurclass->psvar->type, node->pleft->pleft->str);
+                        pcurclass->psvar->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(pcurclass->psvar->name, node->pleft->pright->str);
+                        pcurclass->psvar->next = NULL;
+                    }
+                    else
+                    {
+                        psv->next = (svar*)malloc(sizeof(svar));
+                        psv->next->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(psv->next->type, node->pleft->pleft->str);
+                        psv->next->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(psv->next->name, node->pleft->pright->str);
+                        psv->next->next = NULL;
+                    }
+                }
+                else if(curscope == 2) //fun内的var作用域
+                {
+                    psv = Getfuncvar_tail(pcurfunc->psvar);
+                    if(psv == NULL)
+                    {
+                        pcurfunc->psvar = (svar*)malloc(sizeof(svar));
+                        pcurfunc->psvar->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(pcurfunc->psvar->type, node->pleft->pleft->str);
+                        pcurfunc->psvar->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(pcurfunc->psvar->name, node->pleft->pright->str);
+                        pcurfunc->psvar->next = NULL;
+                    }
+                    else
+                    {
+                        psv->next = (svar*)malloc(sizeof(svar));
+                        psv->next->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(psv->next->type, node->pleft->pleft->str);
+                        psv->next->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(psv->next->name, node->pleft->pright->str);
+                        psv->next->next = NULL;
+                    }
+                }
+                else if(curscope == 3) //local内的var作用域
+                {
+                    pcurlocal = pcurfunc->pslocal->equallocal[pcurfunc->pslocal->equallocal.size()-1]
+                    psv = Getlocalvar_tail(pcurlocal);
+                    if(psv == NULL)
+                    {
+                        pcurfunc->pslocal->psvar = (svar*)malloc(sizeof(svar));
+                        pcurfunc->pslocal->psvar->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(pcurfunc->pslocal->psvar->type, node->pleft->pleft->str);
+                        pcurfunc->pslocal->psvar->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(pcurfunc->pslocal->psvar->name, node->pleft->pright->str);
+                        pcurfunc->pslocal->psvar->next = NULL;
+                    }
+                    else
+                    {
+                        psv->next = (svar*)malloc(sizeof(svar));
+                        psv->next->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(psv->next->type, node->pleft->pleft->str);
+                        psv->next->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(psv->next->name, node->pleft->pright->str);
+                        psv->next->next = NULL;
+                    }
+                }
+                else if(curscope > 3) //func内的local作用域
+                {
+                    pcurlocal = Getcurlocal(pcurfunc->pslocal);
+                    psv = Getlocalvar_tail(pcurlocal);
+                    if(psv == NULL)
+                    {
+                        pcurlocal->psvar = (svar*)malloc(sizeof(svar));
+                        pcurlocal->psvar->type = (char*)malloc(sizeof(node->pleft->pleft->str)+1);
+                        strcpy(pcurlocal->psvar->type, node->pleft->pleft->str);
+                        pcurlocal->psvar->name = (char*)malloc(sizeof(node->pleft->pright->str)+1);
+                        strcpy(pcurlocal->psvar->name, node->pleft->pright->str);
+                        pcurlocal->psvar->next = NULL;
                     }
                     else
                     {
@@ -200,18 +313,50 @@ void print_symtable()
     sclass* p = sGlobal.psclass;
     svar* psvart = NULL;
     sfunc* psfunct = NULL;
+    slocal* pslocalt = NULL;
     while(p != NULL)
     {
         printf("class:%s\n", p->name);
         psfunct = p->psfunc;
         while(psfunct != NULL)
         {
-            printf("func:%s %s\n",psfunct->rtype, psfunct->name);
+            printf("  func:%s %s\n",psfunct->rtype, psfunct->name);
             psvart = psfunct->pspara->psvar;
             while(psvart != NULL)
             {
-                printf("para:%s %s\n", psvart->type, psvart->name);
+                printf("  para:%s %s\n", psvart->type, psvart->name);
                 psvart = psvart->next;
+            }
+            pslocalt = psfunct->pslocal;
+            int i = 0;
+            slocal* pdeep;
+            pdeep = pslocalt->deeplocal;
+            while(1)
+            {
+                while(pslocalt!=NULL)
+                {
+                    psvart = pslocalt->psvar;
+                    while(psvart!=NULL)
+                    {
+                        int j = 0;
+                        printf("    ");
+                        while(j<i)
+                        {
+                            printf("  ");
+                            j=j+1;
+                        }
+                        printf("local:%s %s\n", psvart->type, psvart->name);
+                        psvart = psvart->next;
+                    }
+                    i = i+1;
+                    pslocalt = pslocalt->next;
+                }
+                if(pdeep == NULL)
+                {
+                    break;
+                }
+                pslocalt = pdeep;
+                pdeep= pdeep->next;
             }
             psfunct = psfunct->next;
         }

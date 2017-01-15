@@ -5,11 +5,16 @@
 using namespace std;
 
 enum COLOR {RED, BLACK};
+enum Object {GLOBAL, CLASS, FORMAL, LOCAL};
 
 struct TreeNode {
     int key;
+    char* name;
+    enum Object Otype;
+    char* type;
     TreeNode *parent;
     TreeNode *left, *right;
+    
     COLOR color;
     
     TreeNode& operator = (TreeNode& node)  //Reload the "=" for assignment
@@ -23,7 +28,7 @@ struct TreeNode {
     }
 };
 
-TreeNode NULL_NODE = {INF,nullptr,nullptr,nullptr,BLACK};
+TreeNode NULL_NODE = {INF,nullptr,GLOBAL,nullptr,nullptr,nullptr,nullptr,BLACK};
 
 class Red_Black_Tree
 {
