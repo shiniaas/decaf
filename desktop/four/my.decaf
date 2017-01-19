@@ -1,0 +1,29 @@
+class Computer
+{
+	int ic;
+	int test(int x)
+	{
+		int i;
+		for(i=0; i<5; i=i+1)
+		{
+			x = x+1;
+		}
+		return x;
+	}
+}	
+class Mac extends Computer
+{
+	int op;
+	int Mactest()
+	{
+		return 1;
+	}
+	int main()
+	{
+		class Computer linux;
+		int i;
+		i = linux.ic-i+1+linux.test(1)*Mactest();
+        linux.test(i);
+        return 1;
+	}
+}

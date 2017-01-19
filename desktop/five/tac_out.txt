@@ -1,0 +1,88 @@
+VTABLE(_Computer){
+  <empty>
+  Computer
+  _Computer.test;
+}
+VTABLE(_Mac){
+  _Computer
+  Mac
+  _Mac.test;
+  _Mac.Mactest;
+  _Mac.main;
+}
+FUNCTION(_Computer_New){
+_Computer_New:
+  _T1=8
+  parm _T1
+  _T2=call _Alloc
+  _T3=0
+  *(_T2+4)=_T3
+  _T4=VTBL<Computer>
+  *(_T2+0)=_T4
+  return _T2
+}
+FUNCTION(_Computer_test){
+_Computer_test:
+  _T9=0
+  _T10=_T9
+  _T9=_T10
+label1
+  _T11=_T9
+  _T12=5
+  _T13=_T11<_T12
+  if _T13 goto label2
+  goto label3
+label2
+  _T18=_T17
+  _T19=1
+  _T20=_T18+_T19
+  _T17=_T20
+  _T14=_T9
+  _T15=1
+  _T16=_T14+_T15
+  _T9=_T16
+  goto label1
+label3
+  return _T17
+}
+FUNCTION(_Mac_New){
+_Mac_New:
+  _T5=16
+  parm _T5
+  _T6=call _Alloc
+  _T7=0
+  *(_T6+4)=_T7
+  *(_T6+8)=_T7
+  *(_T6+12)=_T7
+  _T8=VTBL<Mac>
+  *(_T6+0)=_T8
+  return _T6
+}
+FUNCTION(_Mac_Mactest){
+_Mac_Mactest:
+  _T21=1
+  return _T21
+}
+FUNCTION(_Mac_main){
+_Mac_main:
+  _T22=call_Computer_New
+  _T23=0
+  _T24=*(_T22+4)
+  _T25=_T23
+  _T26=_T24-_T25
+  _T27=1
+  _T28=_T26+_T27
+  _T29=1
+  parm _T22
+  parm _T29
+  _T30=call _test
+  _T31=call _Mactest
+  _T32=_T27*_T31
+  _T33=_T28+_T32
+  _T23=_T33
+  parm _T22
+  parm _T23
+  call _test
+  _T34=1
+  return _T34
+}
